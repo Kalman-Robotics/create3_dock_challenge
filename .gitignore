@@ -1,0 +1,15 @@
+# Artefactos de colcon
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Editor / SO
+.vscode/
+.idea/
+*.swp
+.DS_Store

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="create3">
+  <xacro:property name="_doc" value="
+    iRobot Create 3 + LiDAR Slamtec C1 para el reto de docking.
+    Mismo patron que kalman_description/urdf/robot.urdf.xacro: este archivo
+    solo COMPONE macros. El Create 3 viene del paquete oficial y el LiDAR se
+    monta encima con xacro:lidar_sensor.
+
+    OJO - NO poner comentarios XML en este archivo ni en los xacro que incluye.
+    gazebo_ros2_control reinyecta el URDF entero como argumento de linea de
+    comandos (--param robot_description:=...) y rcl lo trunca. Si el corte cae
+    dentro de un comentario, queda abierto, la regla no parsea y el plugin
+    muere: sin controller_manager no hay ruedas y el robot sale inclinado.
+    Una property no se emite al URDF final, asi que es segura.
+  "/>
+
+  <xacro:arg name="lidar_x"   default="-0.050502" />
+  <xacro:arg name="lidar_y"   default="-0.017960" />
+  <xacro:arg name="lidar_z"   default="0.194" />
+  <xacro:arg name="lidar_yaw" default="3.14" />
+  <xacro:arg name="visualize_lidar" default="false" />
+  <xacro:arg name="lidar_noise"     default="0.001" />
+  <xacro:arg name="use_sim"         default="true" />
+
+  <xacro:include filename="$(find irobot_create_description)/urdf/create3.urdf.xacro"/>
+  <xacro:include filename="$(find create3_dock_challenge)/urdf/xacro/lidar.xacro"/>
+
+  <xacro:lidar_sensor parent="base_link"
+                      lidar_x="$(arg lidar_x)"
+                      lidar_y="$(arg lidar_y)"
+                      lidar_z="$(arg lidar_z)"
+                      lidar_yaw="$(arg lidar_yaw)"/>
+
+  <xacro:if value="$(arg use_sim)">
+    <xacro:if value="$(arg visualize_lidar)">
+      <xacro:gazebo_lidar visualize="true" noise_stddev="$(arg lidar_noise)"/>
+    </xacro:if>
+    <xacro:unless value="$(arg visualize_lidar)">
+      <xacro:gazebo_lidar visualize="false" noise_stddev="$(arg lidar_noise)"/>
+    </xacro:unless>
+  </xacro:if>
+
+</robot>

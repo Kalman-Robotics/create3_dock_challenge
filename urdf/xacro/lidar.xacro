@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  
+  <xacro:property name="lidar_radius" value="0.0275" />
+  <xacro:property name="lidar_length" value="0.041" />
+
+  <xacro:property name="body_h"    value="0.0240" />
+  <xacro:property name="turret_r"  value="0.0250" />
+  <xacro:property name="turret_h"  value="0.0055" />
+  <xacro:property name="window_h"  value="0.0115" />
+
+  <xacro:property name="_nota_mesh_cotas" value="
+    RPLIDAR_C1.STL viene en MILIMETROS y con el eje Y hacia arriba, asi que se
+    escala 0.001 y se rota +90 grados en X para dejar la altura en Z.
+
+    Ya rotado y escalado ocupa:
+      x de 0.0000 a 0.0556   (55.6 mm, diametro del cuerpo)
+      y de -0.0648 a 0.0000  (64.8 mm, cuerpo + conector lateral)
+      z de 0.0000 a 0.0413   (41.3 mm, altura del sensor)
+
+    El origen del STL esta en una esquina, no en el centro optico, por eso el
+    visual lleva un offset que compensa el centro del bounding box.
+  "/>
+  <xacro:property name="mesh_cx" value="0.0278" />
+  <xacro:property name="mesh_cy" value="-0.0324" />
+  <xacro:property name="mesh_cz" value="0.0207" />
+
+  <xacro:property name="chassis_top" value="0.0920" />
+  <xacro:property name="support_side" value="0.0450" />
+
+  
+  <xacro:property name="_cotas" value="
+    Cotas tomadas de rbot_description/urdf/properties.urdf.xacro del repo
+    kalman-lab, o sea el montaje FISICO del RRBOT:
+
+      rplidar_x    -0.050502   va por DETRAS del centro del Create 3
+      rplidar_y    -0.017960   descentrado a la derecha
+      rplidar_z     0.12       sobre base_link EN EL ROBOT REAL
+      rplidar_yaw   3.14       montado girado 180 grados
+
+    OJO con la z: en el robot real base_link esta a 6.42 cm del suelo (asi lo
+    define create3.urdf.xacro), luego el laser queda a 0.0642+0.12 = 0.184 m
+    del suelo. Eso concuerda con LIDAR_Z=0.194 de lidar_dock_server.py.
+    En Gazebo base_link acaba a ras de suelo (z~0.001), asi que para reproducir
+    la MISMA altura fisica el default aqui es 0.194, no 0.12. Con 0.12 el laser
+    pasaria a 0.117 m, por debajo de las cajas (base 0.13) y no las veria.
+
+    El yaw importa: con el sensor del reves, el rayo 0 del scan apunta hacia
+    ATRAS del robot. El dock server no se entera porque transforma via TF
+    usando scan.header.frame_id, pero cualquier codigo que asuma 'indice 0 =
+    frente' se equivocaria.
+  "/>
+
+  <xacro:macro name="lidar_sensor"
+               params="parent:='base_link'
+                       lidar_x:=-0.050502
+                       lidar_y:=-0.017960
+                       lidar_z:=0.194
+                       lidar_yaw:=3.14">
+
+    <xacro:property name="_nota_mesh" value="
+      RPLIDAR_C1.STL es un mesh limpio: watertight, winding consistente y sin
+      caras degeneradas. Convertir el STEP oficial por script daba mallas rotas
+      (partes transparentes por normales invertidas), asi que se usa este.
+    "/>
+
+    <link name="laser_link">
+      <visual>
+        <origin xyz="${-mesh_cx} ${-mesh_cy} ${-mesh_cz}" rpy="${pi/2} 0 0"/>
+        <geometry>
+          <mesh filename="package://create3_dock_challenge/meshes/RPLIDAR_C1.STL"
+                scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="lidar_black">
+          <color rgba="0.05 0.05 0.06 1.0"/>
+        </material>
+      </visual>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="1e-6" ixy="0.0" ixz="0.0"
+                 iyy="1e-6" iyz="0.0"
+                 izz="1e-6"/>
+      </inertial>
+    </link>
+
+    <joint name="base_laser_joint" type="fixed">
+      <origin xyz="${lidar_x} ${lidar_y} ${lidar_z}" rpy="0 0 ${lidar_yaw}"/>
+      <parent link="${parent}"/>
+      <child link="laser_link"/>
+    </joint>
+
+    <xacro:property name="_nota_soporte" value="
+      El LiDAR va a 0.194 sobre base_link, o sea muy por encima de la carcasa
+      del Create 3 (que llega a ~0.09). Sin soporte se ve flotando en el aire.
+
+      El soporte es solo VISUAL, sin collision: si tuviera colision el robot se
+      apoyaria en el y saldria inclinado. Va como link aparte para no tocar la
+      pose de laser_link, que es la que usa el dock server via TF.
+
+      Altura: desde el tope de la carcasa (0.09) hasta la base del sensor
+      (0.194 - 0.0205 = 0.1735), o sea 0.0835 m de columna.
+    "/>
+
+    <xacro:property name="support_h" value="${lidar_z - lidar_length/2 - chassis_top}" />
+
+    <link name="lidar_support_link">
+      <visual>
+        <origin xyz="0 0 ${support_h/2}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${support_side} ${support_side} ${support_h}"/>
+        </geometry>
+        <material name="support_blue">
+          <color rgba="0.12 0.28 0.62 1.0"/>
+        </material>
+      </visual>
+      <inertial>
+        <origin xyz="0 0 ${support_h/2}" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="1e-6" ixy="0.0" ixz="0.0"
+                 iyy="1e-6" iyz="0.0"
+                 izz="1e-6"/>
+      </inertial>
+    </link>
+
+    <joint name="base_support_joint" type="fixed">
+      <origin xyz="${lidar_x} ${lidar_y} ${chassis_top}" rpy="0 0 0"/>
+      <parent link="${parent}"/>
+      <child link="lidar_support_link"/>
+    </joint>
+
+  </xacro:macro>
+
+  
+  <xacro:macro name="gazebo_lidar" params="visualize:=false noise_stddev:=0.001">
+
+    <gazebo reference="lidar_support_link">
+      <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <xacro:property name="_nota_material" value="
+      Gazebo ignora los materiales del URDF y usa solo estos de
+      'gazebo reference'. Sin ellos el sensor y la base salen gris por defecto.
+
+      OJO - los visual del link NO deben llevar atributo name. gz_sdf renombra
+      los visuales con nombre al convertir a SDF
+      (lidar_support_link_fixed_joint_lump__base_visual) y entonces ya no les
+      aplica el material de gazebo reference: la base salia gris y el sensor
+      tambien. Sin name el visual conserva su nombre canonico y el material se
+      respeta. Comprobado mirando el SDF con: gz sdf -p robot.urdf
+    "/>
+    <gazebo reference="laser_link">
+      <material>Gazebo/Black</material>
+      <sensor name="laser_scan_sensor" type="ray">
+        <always_on>true</always_on>
+        <visualize>${'true' if visualize else 'false'}</visualize>
+        <update_rate>10</update_rate>
+        <pose>0 0 0 0 0 0</pose>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>720</samples>
+              <resolution>1</resolution>
+              <min_angle>-3.14159</min_angle>
+              <max_angle>3.14159</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.15</min>
+            <max>12.0</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>${noise_stddev}</stddev>
+          </noise>
+        </ray>
+        <plugin name="laser_scan_plugin" filename="libgazebo_ros_ray_sensor.so">
+          <ros>
+            <remapping>~/out:=scan</remapping>
+          </ros>
+          <output_type>sensor_msgs/LaserScan</output_type>
+          <frame_name>laser_link</frame_name>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <xacro:property name="_nota_joint" value="
+      preserveFixedJoint es OBLIGATORIO en base_laser_joint. Sin el, Gazebo
+      fusiona laser_link dentro de base_link al convertir a SDF: el link deja
+      de existir como cuerpo y el sensor acaba montado en el origen de
+      base_link, o sea escaneando a ras de suelo y chocando contra las propias
+      ruedas (se ve un muro plano a ~2 cm del robot). Con el joint preservado,
+      laser_link se mantiene en su pose real.
+    "/>
+    <xacro:property name="_nota_joint_soporte" value="
+      El soporte tambien necesita preservar su joint, pero por otro motivo: al
+      fusionarse en base_link su visual se renombra a
+      base_link_fixed_joint_lump__base_visual_1, y el material de
+      'gazebo reference=lidar_support_link' deja de aplicarsele. Resultado: la
+      base sale gris en vez de azul. Preservando el joint el link sobrevive con
+      su nombre y el material se respeta.
+    "/>
+    <gazebo reference="base_support_joint">
+      <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
+
+    <gazebo reference="base_laser_joint">
+      <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

@@ -1,0 +1,219 @@
+<?xml version="1.0" ?>
+<!--
+  Escenario del reto de docking con LiDAR.
+
+  Replica el montaje fisico del laboratorio (ver foto de referencia):
+  una pared de fondo con dos cajas marcadoras montadas a media altura, y el
+  dock del Create 3 centrado al pie, entre ambas cajas.
+
+  COTAS (medidas del montaje real):
+    caja            8 x 8 cm de planta, 12 cm de alto
+    hueco libre     9.5 cm entre caja y caja (17.5 cm entre centros)
+    base cajas      z = 0.13 m
+    tope cajas      z = 0.25 m
+    pared cajas     centro en x = +2.0 (cara interior en x = 1.95)
+    cajas           centro x = 1.9095: cara trasera al ras de la pared,
+                    sobresaliendo 8 cm hacia la sala. Van montadas en la
+                    pared, sin repisa debajo.
+
+  Sala de 6 x 4 m con paredes de 0.5 m de alto: la de las cajas cierra el
+  extremo +x y quedan ~3.9 m libres hacia -x para maniobrar. Media altura basta
+  porque el LiDAR escanea a 0.19 m, y asi la escena se ve bien desde fuera.
+
+  El plano del LiDAR va a z = 0.194, a media altura de las cajas. La firma que
+  ve el laser es: pared plana, dos escalones de 8 cm de ancho que sobresalen
+  8 cm, separados por un hueco de 9.5 cm donde asoma la pared. El centro del
+  hueco es el eje del dock.
+-->
+<sdf version="1.6">
+  <world name="dock_challenge">
+
+    <!-- Expone /gazebo/get_entity_state y /gazebo/set_entity_state, utiles para
+         verificar poses y teletransportar el robot al evaluar el reto.
+         OJO: nada de <argument>--ros-args</argument> aqui dentro; ese vestigio
+         corrompe la init del contexto ROS y tumba TODOS los plugins que crean
+         nodos (dock_status_publisher, ir_omni, p3d, optical_mouse). -->
+    <plugin name="gazebo_ros_state" filename="libgazebo_ros_state.so">
+      <ros>
+        <namespace>/gazebo</namespace>
+      </ros>
+      <update_rate>1.0</update_rate>
+    </plugin>
+
+    <scene>
+      <ambient>0.8 0.8 0.8 1.0</ambient>
+      <background>0.75 0.78 0.82 1.0</background>
+      <shadows>true</shadows>
+      <grid>false</grid>
+    </scene>
+
+    <!-- Sin bloque <physics> a proposito: se usan los valores por defecto de
+         Gazebo (max_step_size 0.001, 1000 Hz), que son los mismos que usa la
+         simulacion oficial del Create 3 con empty.world.
+         Un paso mas grueso (0.003 / 333 Hz) resuelve mal el contacto de las
+         ruedas: el robot se apoya sobre la rueda loca delantera y aparece
+         inclinado ~6 grados. -->
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- ============================================================
+         PARED DE FONDO
+         Detras del dock. Es la referencia plana contra la que
+         destacan las dos cajas en el scan del LiDAR.
+         ============================================================ -->
+    <model name="back_wall">
+      <static>true</static>
+      <pose>2.0 0 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box><size>0.1 4.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box><size>0.1 4.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.09 0.13 0.22 1</ambient>
+            <diffuse>0.16 0.22 0.35 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================
+         CAJAS MARCADORAS  (la firma que el alumno debe detectar)
+
+         Cada caja: 8 x 8 cm de planta, 12 cm de alto.
+         Centro en z = 0.19 (base 0.13, tope 0.25).
+
+         Separacion entre caras interiores = 9.5 cm, o sea los centros
+         estan en y = +-(0.095/2 + 0.08/2) = +-0.0875 (17.5 cm entre
+         centros, que es lo que busca EXPECTED_SEP=0.176 del dock server).
+
+         Centro en x = 1.9095: la cara trasera queda al ras de la pared
+         (1.9495 contra 1.95) y la frontal en 1.8695, sobresaliendo 8 cm.
+
+         El centro depende del fondo: si se cambia el tamano hay que recalcular
+         x = 1.95 - fondo/2 - 0.0005, o las cajas se hunden en la pared.
+
+         Ese medio milimetro de holgura es deliberado: con las caras
+         exactamente coincidentes Gazebo hace z-fighting y las cajas se ven
+         parpadeando o hundidas en la pared.
+         ============================================================ -->
+    <model name="marker_box_left">
+      <static>true</static>
+      <pose>1.9095 0.0875 0.19 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box><size>0.08 0.08 0.12</size></box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box><size>0.08 0.08 0.12</size></box>
+          </geometry>
+          <material>
+            <ambient>0.75 0.35 0.05 1</ambient>
+            <diffuse>0.95 0.48 0.10 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="marker_box_right">
+      <static>true</static>
+      <pose>1.9095 -0.0875 0.19 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box><size>0.08 0.08 0.12</size></box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box><size>0.08 0.08 0.12</size></box>
+          </geometry>
+          <material>
+            <ambient>0.75 0.35 0.05 1</ambient>
+            <diffuse>0.95 0.48 0.10 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <!-- Paredes laterales, delimitan el area de maniobra -->
+    <model name="side_wall_left">
+      <static>true</static>
+      <pose>-1.0 2.0 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>6.0 0.1 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>6.0 0.1 0.5</size></box></geometry>
+          <material>
+            <ambient>0.09 0.13 0.22 1</ambient>
+            <diffuse>0.16 0.22 0.35 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="side_wall_right">
+      <static>true</static>
+      <pose>-1.0 -2.0 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>6.0 0.1 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>6.0 0.1 0.5</size></box></geometry>
+          <material>
+            <ambient>0.09 0.13 0.22 1</ambient>
+            <diffuse>0.16 0.22 0.35 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="front_wall">
+      <static>true</static>
+      <pose>-4.0 0 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.1 4.0 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.1 4.0 0.5</size></box></geometry>
+          <material>
+            <ambient>0.09 0.13 0.22 1</ambient>
+            <diffuse>0.16 0.22 0.35 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <gui fullscreen="0">
+      <camera name="user_camera">
+        <pose>-1.8 -2.2 2.2 0 0.55 0.85</pose>
+      </camera>
+    </gui>
+
+  </world>
+</sdf>
