@@ -34,6 +34,7 @@ ros2 topic echo /dock_status
 | **Entrega** | Repo público + video sin cortes, hasta el **20 de septiembre de 2026** |
 | **Si lo logras** | Acceso al **laboratorio de Kalman Robotics** para preparar la final con el robot real |
 | **Final** | Top 8 el 30 de septiembre · **jueves 5 de noviembre, 14:00–16:00**, sobre el robot físico |
+| **Premios** | Kit Nexus, LiDAR DFRobot, trofeo y suscripciones Pro — [ver detalle](#12-premios-y-beneficios) |
 
 ---
 
@@ -597,18 +598,21 @@ No hace falta entrar al Top 8 para obtenerlo. Basta con resolver el reto.
 
 | Puesto | Premio |
 |---|---|
-| **1er lugar** | Trofeo de Campeón, certificado físico y mención en el repositorio oficial del reto |
-| **2do y 3er lugar** | Medalla y certificado físico |
-| **Top 8 finalistas** | Certificado virtual de clasificación y acceso al laboratorio |
+| **1er lugar** | 🏆 Trofeo de Campeón · certificado físico · **Kit Nexus completo** · **3 meses de suscripción Pro** a la plataforma de Kalman Robotics |
+| **2do lugar** | 🥈 Medalla · certificado físico · **LiDAR DFRobot** · **3 meses de suscripción Pro** |
+| **3er lugar** | 🥉 Medalla · certificado físico · **3 meses de suscripción Pro** |
+| **Top 8 finalistas** | Certificado virtual de clasificación · acceso al laboratorio de Kalman Robotics |
 
-> *La lista de premios materiales y de los patrocinios asociados se ampliará en
-> el anuncio oficial del HRFEST 2026. Consulta siempre*
-> *[hrfest.org](https://hrfest.org/congress/2026/competitions) como fuente*
-> *vinculante.*
+> **Las suscripciones Pro son individuales:** cada integrante del equipo
+> premiado recibe la suya, hasta el máximo de 5 integrantes por equipo.
 
 **Importante:** es obligatorio que los 8 finalistas asistan presencialmente a
 la Gran Final para disputar el podio y reclamar los premios físicos. Quien
 clasifique y no asista recibe únicamente el certificado digital.
+
+> *El pozo de premios puede ampliarse con aportes de patrocinadores. Consulta*
+> *[hrfest.org](https://hrfest.org/congress/2026/competitions) como fuente*
+> *vinculante.*
 
 ---
 
