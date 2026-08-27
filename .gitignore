@@ -13,3 +13,8 @@ __pycache__/
 .idea/
 *.swp
 .DS_Store
+
+# Video: se aloja en GitHub via adjunto (user-attachments), no en el repo.
+# Commitearlo deja megas permanentes en el historial de git.
+docs/video/
+*.mp4
