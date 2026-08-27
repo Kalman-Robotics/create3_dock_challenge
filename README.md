@@ -7,6 +7,11 @@ Bases y registro: **https://hrfest.org/congress/2026/competitions**
 
 **Etapa clasificatoria — cierre: 20 de septiembre de 2026, 23:59 (hora de Perú).**
 
+> **Resuélvelo en simulación y entras al laboratorio.** Todo equipo que complete
+> el reto antes del cierre podrá preparar la Gran Final trabajando con el
+> **iRobot Create 3 real** en el laboratorio de Kalman Robotics. La final se
+> disputa sobre ese robot, no sobre el simulador.
+
 ---
 
 ## Inicio rápido
@@ -27,7 +32,8 @@ ros2 topic echo /dock_status
 | **Mueves el robot con** | `/cmd_vel` |
 | **Prohibido** | La acción `/dock`, los sensores IR, y la posición que da el simulador |
 | **Entrega** | Repo público + video sin cortes, hasta el **20 de septiembre de 2026** |
-| **Final** | Top 8 el 30 de septiembre · Gran Final presencial el **6 de noviembre** |
+| **Si lo logras** | Acceso al **laboratorio de Kalman Robotics** para preparar la final con el robot real |
+| **Final** | Top 8 el 30 de septiembre · **jueves 5 de noviembre, 14:00–16:00**, sobre el robot físico |
 
 ---
 
@@ -44,10 +50,11 @@ ros2 topic echo /dock_status
 9. [Cronograma y estructura](#9-cronograma-y-estructura)
 10. [Reglas del concurso](#10-reglas-del-concurso)
 11. [Evaluación y puntaje](#11-evaluación-y-puntaje)
-12. [Cómo entregar](#12-cómo-entregar)
-13. [Pistas](#13-pistas)
-14. [Problemas frecuentes](#14-problemas-frecuentes)
-15. [Contacto](#15-contacto)
+12. [Premios y beneficios](#12-premios-y-beneficios)
+13. [Cómo entregar](#13-cómo-entregar)
+14. [Pistas](#14-pistas)
+15. [Problemas frecuentes](#15-problemas-frecuentes)
+16. [Contacto](#16-contacto)
 
 ---
 
@@ -400,32 +407,52 @@ ros2 topic echo /dock_status --field is_docked
 
 ## 9. Cronograma y estructura
 
-Este reto sigue el formato de todas las categorías del HRFEST 2026:
-**clasificatoria asíncrona → Top 8 → final presencial.**
+Este reto tiene **tres momentos**: resuelves en simulación, te preparas en el
+laboratorio con el robot real, y compites en vivo sobre ese robot.
 
 | Hito | Fecha |
 |---|---|
 | Apertura de inscripciones | 02 de julio de 2026 |
 | **Cierre de envíos** | **20 de septiembre de 2026** (impostergable) |
+| Acceso al laboratorio de Kalman Robotics | del 21 de septiembre al 4 de noviembre |
 | Resultados Top 8 | 30 de septiembre de 2026 |
-| **Gran Final presencial** | **viernes 06 de noviembre de 2026** |
+| **Gran Final presencial** | **jueves 05 de noviembre de 2026, 14:00–16:00, Auditorio** |
 
-### Etapa 1 — Clasificatoria (lo que describe este README)
+### Etapa 1 — Clasificatoria en simulación
 
-Resuelves el docking en simulación desde tu casa y envías tu solución antes del
+Resuelves el docking en Gazebo desde tu casa y envías tu solución antes del
 20 de septiembre. De aquí salen los **8 equipos finalistas**.
 
-### Etapa 2 — Gran Final presencial
+### 🔧 Beneficio — Acceso al laboratorio de Kalman Robotics
 
-Los 8 clasificados se enfrentan **in situ a un escenario secreto**: mismo robot,
-mismos sensores, mismas reglas, pero con la disposición cambiada (otra pose
-inicial, el dock reubicado y obstáculos añadidos a la sala).
+> **Todo equipo que logre completar el reto en simulación antes del 20 de
+> septiembre obtiene acceso al laboratorio de Kalman Robotics**, donde podrá
+> **preparar la final sobre el iRobot Create 3 real**: afinar su algoritmo,
+> ajustar umbrales y comprobar cómo se comporta su detección con un LiDAR
+> físico, un dock físico y un suelo real.
+
+No es un premio simbólico: es la diferencia entre llegar a la final con código
+que solo ha visto un simulador y llegar con código ya probado en hardware. El
+salto de simulación a robot real es la parte más dura del reto, y este acceso
+existe para que no la enfrentes por primera vez el día de la final.
+
+### Etapa 2 — Gran Final sobre el robot real
+
+**Jueves 05 de noviembre, 14:00 a 16:00, en el Auditorio.**
+
+Los 8 finalistas **despliegan su código en el iRobot Create 3 físico y lo
+ejecutan en vivo** delante del jurado y del público. Mismo robot, mismo LiDAR,
+mismas cajas marcadoras — pero el mundo real: ruido de verdad, deslizamiento de
+ruedas, deriva de odometría y una **pose de arranque que no conoces de
+antemano**.
 
 > **Por eso las reglas anti-hardcode no son un formalismo.** En la final tu
-> código se ejecuta sobre un mundo que no has visto. Una solución que percibe
-> se adapta; una que memoriza coordenadas se queda parada.
+> código corre sobre una escena que no has visto, en un robot que no es el del
+> simulador. Una solución que percibe se adapta; una que memoriza coordenadas
+> se queda parada delante del público.
 
-La asistencia presencial es **obligatoria** para disputar el podio.
+La asistencia presencial es **obligatoria** para disputar el podio. Quien
+clasifique y no asista recibe únicamente el certificado digital.
 
 ---
 
@@ -467,8 +494,12 @@ La asistencia presencial es **obligatoria** para disputar el podio.
 
 ## 11. Evaluación y puntaje
 
-Esta rúbrica corresponde a la **etapa clasificatoria**, de la que salen los 8
-finalistas. En la Gran Final presencial se compite sobre un escenario secreto.
+Se puntúa en dos momentos independientes: la **clasificatoria** decide quiénes
+son los 8 finalistas, y la **final** decide el podio.
+
+---
+
+### Etapa 1 — Clasificatoria (simulación)
 
 Tu solución se ejecuta en **3 corridas desde poses iniciales que no conoces**,
 sorteadas dentro de estos rangos:
@@ -479,17 +510,22 @@ y   ∈ [−0.9, 0.9]   m
 yaw ∈ [−π,   π]     rad     (el robot puede arrancar de espaldas al dock)
 ```
 
-Se usa el mismo `lidar_noise` por defecto (σ = 1 mm) en las 3 corridas.
+Se usa el `lidar_noise` por defecto (σ = 1 mm) en las 3 corridas.
 
-### Rúbrica — 100 puntos
+#### Rúbrica — 100 puntos
 
 | Criterio | Puntos | Detalle |
 |---|---:|---|
-| **Docking logrado** | **60** | 20 pts por cada corrida con `is_docked: true` dentro de 180 s. |
-| **Tiempo** | **20** | Sobre el promedio de las corridas exitosas. ≤ 45 s → 20 pts; escala lineal hasta 180 s → 0 pts. |
-| **Robustez** | **20** | Sin colisiones, comportamiento estable (no oscila ni se atasca), recupera si pierde de vista las cajas, código legible y documentado. |
+| **Docking logrado** | **50** | Aproximadamente 17 pts por cada corrida con `is_docked: true` dentro de 180 s. |
+| **Tiempo** | **15** | Sobre el promedio de las corridas exitosas. ≤ 45 s → 15 pts; escala lineal hasta 180 s → 0 pts. |
+| **Robustez** | **20** | Sin colisiones, comportamiento estable (no oscila ni se atasca), recupera si pierde de vista las cajas. |
+| **Calidad del código** | **15** | Código estructurado y legible, documentado, con las dependencias declaradas. |
 
-### Penalizaciones
+> **Completar el reto** (al menos una corrida con `is_docked: true`, sin faltas
+> descalificatorias) es lo que da **acceso al laboratorio**. El puntaje decide
+> quién entra al Top 8.
+
+#### Penalizaciones
 
 | Falta | Efecto |
 |---|---|
@@ -498,15 +534,85 @@ Se usa el mismo `lidar_noise` por defecto (σ = 1 mm) en las 3 corridas.
 | Hardcodear la pose del dock o la trayectoria | **Descalificación** |
 | Modificar `create3_dock_challenge` | **Descalificación** |
 | No compila / no arranca con el comando documentado | **Descalificación** |
+| Video con cortes de edición | **Descalificación** |
 
-### Desempate
+#### Desempate
 
 En orden: (1) mayor número de corridas exitosas, (2) menor tiempo promedio,
-(3) menor error lateral de acoplamiento, (4) claridad del código.
+(3) menor error lateral de acoplamiento, (4) calidad del código.
 
 ---
 
-## 12. Cómo entregar
+### Etapa 2 — Gran Final (robot real)
+
+**Jueves 05 de noviembre, 14:00–16:00, Auditorio.** Dos horas para ocho equipos.
+
+#### Formato
+
+| Momento | Duración |
+|---|---|
+| Briefing y sorteo de orden y de poses de arranque | 15 min |
+| **Turno por equipo** (8 equipos) | 11 min cada uno |
+| Deliberación y resultados | 15 min |
+
+Dentro de tu turno de 11 minutos:
+
+1. **Despliegue (4 min):** clonas y compilas tu repositorio en el equipo de la
+   organización, o traes tu propia laptop ya configurada. El cronómetro corre.
+2. **Intento 1 (máx. 3 min):** el robot arranca desde la pose sorteada.
+3. **Intento 2 (máx. 3 min):** solo si el primero falló. Se puntúa el mejor.
+
+Entre intentos puedes **ajustar parámetros**, pero **no reescribir el
+algoritmo**: el código que despliegas es el que enviaste el 20 de septiembre,
+o el que hayas afinado en el laboratorio de Kalman.
+
+#### Rúbrica — 100 puntos
+
+| Criterio | Puntos | Detalle |
+|---|---:|---|
+| **Docking logrado** | **50** | 50 pts al primer intento · 30 pts al segundo · 0 si no acopla. |
+| **Tiempo** | **20** | Desde la orden de inicio hasta `is_docked: true`. Menor tiempo, más puntos. |
+| **Robustez en hardware** | **15** | Sin choques contra el dock, las cajas o el público. Comportamiento controlado, sin movimientos bruscos ni velocidades peligrosas. |
+| **Sustentación técnica** | **15** | Explicación al jurado de cómo detectas la firma, y qué tuviste que cambiar al pasar de simulación a robot real. |
+
+#### Cómo se decide el podio
+
+El puntaje final es **30% clasificatoria + 70% final**. La simulación te lleva
+al escenario; el robot real decide quién gana.
+
+---
+
+## 12. Premios y beneficios
+
+### 🔧 Beneficio por completar el reto
+
+**Acceso al laboratorio de Kalman Robotics.** Todo equipo que complete el
+docking en simulación antes del 20 de septiembre podrá trabajar con el
+**iRobot Create 3 real** para preparar la final: afinar su algoritmo, ajustar
+umbrales y validar su detección sobre hardware.
+
+No hace falta entrar al Top 8 para obtenerlo. Basta con resolver el reto.
+
+### 🏆 Premios oficiales
+
+| Puesto | Premio |
+|---|---|
+| **1er lugar** | Trofeo de Campeón, certificado físico y mención en el repositorio oficial del reto |
+| **2do y 3er lugar** | Medalla y certificado físico |
+| **Top 8 finalistas** | Certificado virtual de clasificación y acceso al laboratorio |
+
+> *La lista de premios materiales y de los patrocinios asociados se ampliará en
+> el anuncio oficial del HRFEST 2026. Consulta siempre*
+> *[hrfest.org](https://hrfest.org/congress/2026/competitions) como fuente*
+> *vinculante.*
+
+**Importante:** es obligatorio que los 8 finalistas asistan presencialmente a
+la Gran Final para disputar el podio y reclamar los premios físicos. Quien
+clasifique y no asista recibe únicamente el certificado digital.
+
+---
+
+## 13. Cómo entregar
 
 La entrega sigue el flujo oficial de dos fases del HRFEST 2026.
 
@@ -561,7 +667,7 @@ cronograma oficial.
 
 ---
 
-## 13. Pistas
+## 14. Pistas
 
 <details>
 <summary><b>Cómo abordarlo (haz clic para desplegar)</b></summary>
@@ -608,7 +714,7 @@ forma:
 
 ---
 
-## 14. Problemas frecuentes
+## 15. Problemas frecuentes
 
 <details>
 <summary><b>"YA HAY UNA SIMULACION CORRIENDO"</b></summary>
@@ -670,7 +776,7 @@ y entra despacio.
 
 ---
 
-## 15. Contacto
+## 16. Contacto
 
 - **Organiza:** Kalman Robotics — categoría oficial del HRFEST 2026.
 - **Bases oficiales y registro:** https://hrfest.org/congress/2026/competitions

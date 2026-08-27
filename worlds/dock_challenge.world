@@ -157,30 +157,27 @@
     <!-- ============================================================
          LOGOS EN EL SUELO
 
-         Placas finas apoyadas en el suelo, en la zona de maniobra y
-         lejos del dock para no interferir con el reto.
+         Uno a cada lado del dock, en las esquinas del fondo, girados 90
+         grados para correr paralelos a la pared de las cajas. Fuera de la
+         trayectoria de aproximacion del robot.
 
-         Solo <visual>, sin <collision>: no estorban al robot ni salen
-         en el scan. El LiDAR escanea a 0.1775 m, muy por encima, pero
-         sin colision directamente no existen para el laser.
+         Solo <visual>, sin <collision>: no estorban al robot ni salen en
+         el scan del LiDAR.
 
          Se usa <plane> y NO <box>: un box mapea la textura a cada cara
-         con UV fijo, sin respetar la proporcion de la cara, y el logo
-         sale estirado. El plane la proyecta una sola vez, respetando
-         el aspecto.
+         con UV fijo, sin respetar la proporcion, y el logo sale estirado.
 
-         Las texturas se generan en tamanos potencia de 2 (1024x256 y
-         1024x512): Ogre reescala las que no lo son y el logo pierde
-         nitidez. El logo va centrado en ese lienzo con un margen del 4%.
-
-         La placa debe tener EL MISMO aspecto que su textura, o el logo
-         sale deformado:
+         Las texturas son PNG RGBA con el fondo transparente del original;
+         el material las mezcla con scene_blend alpha_blend, asi que se ve
+         solo el logo, sin rectangulo de fondo. Van en tamanos potencia de
+         2 (1024x256 y 1024x512) porque Ogre reescala los que no lo son y
+         se pierde nitidez. La placa lleva el mismo aspecto que su textura:
            Kalman  1024x256 = 4:1  ->  1.40 x 0.35 m
            HRFEST  1024x512 = 2:1  ->  1.10 x 0.55 m
          ============================================================ -->
     <model name="kalman_logo">
       <static>true</static>
-      <pose>-1.0 0 0.001 0 0 0</pose>
+      <pose>1.55 1.05 0.002 0 0 1.5708</pose>
       <link name="link">
         <visual name="visual">
           <geometry>
@@ -202,7 +199,7 @@
 
     <model name="hrfest_logo">
       <static>true</static>
-      <pose>-2.2 0 0.001 0 0 0</pose>
+      <pose>1.45 -1.05 0.002 0 0 1.5708</pose>
       <link name="link">
         <visual name="visual">
           <geometry>

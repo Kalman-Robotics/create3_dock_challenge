@@ -1,11 +1,14 @@
-// Material del logo de Kalman Robotics para el suelo del escenario.
+// Logos del escenario.
 //
-// Gazebo Classic busca estos scripts en <uri>model://.../materials/scripts</uri>
-// y las texturas en el materials/textures de al lado.
+// Las texturas son PNG RGBA con el fondo transparente del original. Para que
+// Gazebo respete ese alfa en vez de pintarlo negro hacen falta tres cosas en
+// el pass:
 //
-// La textura ya viene compuesta sobre blanco: el PNG original es 95%
-// transparente y Gazebo pinta el alfa en negro, asi que un logo con fondo
-// transparente se veria como un rectangulo negro en el suelo.
+//   scene_blend alpha_blend   mezcla el logo con lo que hay detras
+//   depth_write off           evita que el plano tape lo que tiene detras
+//   lighting off              color plano, sin sombreado del suelo
+//
+// Sin depth_write off se ven artefactos donde el plano toca el suelo.
 
 material Kalman/Logo
 {
@@ -13,9 +16,9 @@ material Kalman/Logo
   {
     pass
     {
-      ambient 0.85 0.85 0.85 1.0
-      diffuse 1.0 1.0 1.0 1.0
-      specular 0.05 0.05 0.05 1.0 2.0
+      scene_blend alpha_blend
+      depth_write off
+      lighting off
 
       texture_unit
       {
@@ -27,18 +30,15 @@ material Kalman/Logo
   }
 }
 
-// El logo de HRFEST va en tonos casi blancos (brillo medio 240 sobre 255), asi
-// que su textura se compuso sobre azul oscuro en vez de blanco: sobre fondo
-// claro no se veria nada. El azul es el mismo de las paredes del escenario.
 material Kalman/HRFest
 {
   technique
   {
     pass
     {
-      ambient 0.85 0.85 0.85 1.0
-      diffuse 1.0 1.0 1.0 1.0
-      specular 0.05 0.05 0.05 1.0 2.0
+      scene_blend alpha_blend
+      depth_write off
+      lighting off
 
       texture_unit
       {
