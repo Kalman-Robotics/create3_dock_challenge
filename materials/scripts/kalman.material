@@ -52,10 +52,14 @@ material Kalman/HRFest
 
 // Suelo de marmol gris del escenario.
 //
-// La textura trae 3x2 baldosas en 1536x1024 px. Suponiendo baldosas de 60 cm,
-// una repeticion cubre 1.8 x 1.2 m, asi que sobre el plano de 100x100 m hay
-// que repetirla ~56 veces (100/1.8). Ese es el scale_uv: un valor mas bajo
-// agranda las baldosas, uno mas alto las hace mas pequenas.
+// La textura se recorto a 1024x1024 (2x2 baldosas de 512 px) para que sea
+// CUADRADA. La original era 1536x1024 (3x2 baldosas), o sea aspecto 1.5, y con
+// el mismo scale en U y V las baldosas salian 1.5 veces mas anchas que altas.
+// Con textura cuadrada el scale uniforme da baldosas cuadradas.
+//
+// Cada baldosa mide 60 cm, luego la textura cubre 1.2 x 1.2 m. Sobre el plano
+// de 100x100 m se repite 100/1.2 = 83 veces -> scale 0.012.
+// Bajar el scale agranda las baldosas; subirlo las hace mas pequenas.
 //
 // Sin scene_blend: el suelo es opaco, no necesita mezcla.
 material Kalman/FloorMarble
@@ -73,7 +77,7 @@ material Kalman/FloorMarble
         texture floor_marble.png
         filtering anisotropic
         max_anisotropy 8
-        scale 0.018 0.018
+        scale 0.012 0.012
       }
     }
   }

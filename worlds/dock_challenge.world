@@ -191,8 +191,9 @@
     <!-- ============================================================
          LOGOS EN EL SUELO
 
-         Uno a cada lado del dock, en las esquinas del fondo, girados 90
-         grados para correr paralelos a la pared de las cajas. Fuera de la
+         Uno a cada lado del dock, en las esquinas del fondo, girados 270
+         grados (yaw 4.7124) para correr paralelos a la pared de las cajas
+         y quedar legibles desde el centro de la sala. Fuera de la
          trayectoria de aproximacion del robot.
 
          Solo <visual>, sin <collision>: no estorban al robot ni salen en
@@ -211,7 +212,7 @@
          ============================================================ -->
     <model name="kalman_logo">
       <static>true</static>
-      <pose>1.55 1.05 0.002 0 0 1.5708</pose>
+      <pose>1.55 1.05 0.002 0 0 4.7124</pose>
       <link name="link">
         <visual name="visual">
           <geometry>
@@ -233,7 +234,7 @@
 
     <model name="hrfest_logo">
       <static>true</static>
-      <pose>1.45 -1.05 0.002 0 0 1.5708</pose>
+      <pose>1.45 -1.05 0.002 0 0 4.7124</pose>
       <link name="link">
         <visual name="visual">
           <geometry>

@@ -34,7 +34,7 @@ ros2 topic echo /dock_status
 | **Entrega** | Repo público + video sin cortes, hasta el **20 de septiembre de 2026** |
 | **Si lo logras** | Acceso al **laboratorio de Kalman Robotics** para preparar la final con el robot real |
 | **Final** | Top 8 el 30 de septiembre · **jueves 5 de noviembre, 14:00–16:00**, sobre el robot físico |
-| **Premios** | Kit Nexus, LiDAR DFRobot, trofeo y suscripciones Pro — [ver detalle](#12-premios-y-beneficios) |
+| **Premios** | Kit NEXUS, LiDAR Waveshare D500, trofeo y suscripciones Pro — [ver detalle](#12-premios-y-beneficios) |
 
 ---
 
@@ -610,13 +610,55 @@ correo a los equipos que superen la primera etapa.
 
 | Puesto | Premio |
 |---|---|
-| **1er lugar** | 🏆 Trofeo de Campeón · certificado físico · **Kit Nexus completo** · **3 meses de suscripción Pro** a la plataforma de Kalman Robotics |
-| **2do lugar** | 🥈 Medalla · certificado físico · **LiDAR DFRobot** · **3 meses de suscripción Pro** |
+| **1er lugar** | 🏆 Trofeo de Campeón · certificado físico · **Kit NEXUS completo** · **3 meses de suscripción Pro** a la plataforma de Kalman Robotics |
+| **2do lugar** | 🥈 Medalla · certificado físico · **LiDAR Waveshare D500** · **3 meses de suscripción Pro** |
 | **3er lugar** | 🥉 Medalla · certificado físico · **3 meses de suscripción Pro** |
 | **Top 8 finalistas** | Certificado virtual de clasificación · acceso al laboratorio de Kalman Robotics |
 
 > **Las suscripciones Pro son individuales:** cada integrante del equipo
 > premiado recibe la suya, hasta el máximo de 5 integrantes por equipo.
+
+---
+
+### 🤖 Kit NEXUS — primer puesto
+
+![Kit NEXUS de Kalman Robotics](docs/img/nexus_kit.jpg)
+
+El **NEXUS** es el robot móvil diferencial de Kalman Robotics: una plataforma
+compacta de **14 × 10 × 8 cm** pensada para aprender navegación autónoma de
+verdad, no en diagramas.
+
+| Componente | |
+|---|---|
+| **Placa electrónica** | Controladora propia, con **micro-ROS** integrado |
+| **Motores con encoders** | Tracción diferencial con odometría |
+| **IMU** | Orientación y estimación de pose |
+| **LiDAR D500** | Escaneo 360° para SLAM y navegación |
+
+Sale de la caja listo para **SLAM y navegación autónoma**. Es, literalmente, el
+siguiente paso después de este reto: acabas de resolver docking por LiDAR en
+simulación, y te llevas una plataforma real sobre la que seguir construyendo.
+
+---
+
+### 📡 LiDAR Waveshare D500 — segundo puesto
+
+El mismo sensor que monta el NEXUS. LiDAR 360° por tiempo de vuelo (DTOF),
+compatible con ROS 2.
+
+| Parámetro | Valor |
+|---|---|
+| Rango de medición | 0.03 – 12 m |
+| Frecuencia de muestreo | 5000 Hz |
+| Frecuencia de escaneo | 10 Hz |
+| Resolución angular | ≤ 0.72° |
+| Campo de visión | 360° |
+| Precisión | 10 mm (0.3–0.5 m) · 20 mm (0.5–2 m) · 30 mm (2–12 m) |
+| Interfaz | UART @ 230400 bps · 5 V |
+
+📄 [Documentación oficial](https://www.waveshare.com/wiki/D500_LiDAR_Kit)
+
+---
 
 **Importante:** es obligatorio que los 8 finalistas asistan presencialmente a
 la Gran Final para disputar el podio y reclamar los premios físicos. Quien
