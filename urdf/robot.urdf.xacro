@@ -16,7 +16,7 @@
 
   <xacro:arg name="lidar_x"   default="-0.050502" />
   <xacro:arg name="lidar_y"   default="-0.017960" />
-  <xacro:arg name="lidar_z"   default="0.194" />
+  <xacro:arg name="lidar_z"   default="0.1775" />
   <xacro:arg name="lidar_yaw" default="3.14" />
   <xacro:arg name="visualize_lidar" default="false" />
   <xacro:arg name="lidar_noise"     default="0.001" />

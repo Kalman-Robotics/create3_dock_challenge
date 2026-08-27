@@ -30,7 +30,7 @@
 
     <!-- Expone /gazebo/get_entity_state y /gazebo/set_entity_state, utiles para
          verificar poses y teletransportar el robot al evaluar el reto.
-         OJO: nada de <argument>--ros-args</argument> aqui dentro; ese vestigio
+         OJO: nada de <argument> con los flags de ros-args aqui dentro; ese vestigio
          corrompe la init del contexto ROS y tumba TODOS los plugins que crean
          nodos (dock_status_publisher, ir_omni, p3d, optical_mouse). -->
     <plugin name="gazebo_ros_state" filename="libgazebo_ros_state.so">
@@ -153,6 +153,74 @@
       </link>
     </model>
 
+
+    <!-- ============================================================
+         LOGOS EN EL SUELO
+
+         Placas finas apoyadas en el suelo, en la zona de maniobra y
+         lejos del dock para no interferir con el reto.
+
+         Solo <visual>, sin <collision>: no estorban al robot ni salen
+         en el scan. El LiDAR escanea a 0.1775 m, muy por encima, pero
+         sin colision directamente no existen para el laser.
+
+         Se usa <plane> y NO <box>: un box mapea la textura a cada cara
+         con UV fijo, sin respetar la proporcion de la cara, y el logo
+         sale estirado. El plane la proyecta una sola vez, respetando
+         el aspecto.
+
+         Las texturas se generan en tamanos potencia de 2 (1024x256 y
+         1024x512): Ogre reescala las que no lo son y el logo pierde
+         nitidez. El logo va centrado en ese lienzo con un margen del 4%.
+
+         La placa debe tener EL MISMO aspecto que su textura, o el logo
+         sale deformado:
+           Kalman  1024x256 = 4:1  ->  1.40 x 0.35 m
+           HRFEST  1024x512 = 2:1  ->  1.10 x 0.55 m
+         ============================================================ -->
+    <model name="kalman_logo">
+      <static>true</static>
+      <pose>-1.0 0 0.001 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>1.40 0.35</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://create3_dock_challenge/materials/scripts</uri>
+              <uri>model://create3_dock_challenge/materials/textures</uri>
+              <name>Kalman/Logo</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="hrfest_logo">
+      <static>true</static>
+      <pose>-2.2 0 0.001 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>1.10 0.55</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://create3_dock_challenge/materials/scripts</uri>
+              <uri>model://create3_dock_challenge/materials/textures</uri>
+              <name>Kalman/HRFest</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
 
     <!-- Paredes laterales, delimitan el area de maniobra -->
     <model name="side_wall_left">

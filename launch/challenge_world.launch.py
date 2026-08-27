@@ -4,12 +4,13 @@ Envuelve create3_lidar.launch.py fijando el mundo con la pared, las cajas
 marcadoras y el dock, mas una pose inicial de aproximacion.
 
 ESCENARIO (cotas del montaje real, ver foto de referencia)
-  cajas         6.5 cm fondo x 8 cm ancho x 12 cm alto, de z=0.13 a z=0.25
+  cajas         8 x 8 cm de planta, 12 cm de alto, de z=0.13 a z=0.25
   hueco         9.5 cm entre caja y caja (17.5 cm entre centros)
   pared         cara interior en x = 1.95
-  cajas         centro x = 1.9175, cara frontal en 1.885
+  cajas         centro x = 1.9095, cara frontal en 1.8695
   dock          x = 1.85, al pie de las cajas
-  LiDAR         plano de escaneo a z = 0.194, a media altura de las cajas
+  LiDAR         plano de escaneo a z = 0.1775, dentro de la banda de las cajas
+  soporte       caja blanca 16 x 11 x 6.5 cm sobre la tapa del robot
 
 FIRMA QUE VE EL LASER (verificada a 46 cm de las cajas)
   dos escalones de ~8 cm de ancho que sobresalen ~8 cm sobre el fondo,
@@ -34,12 +35,11 @@ ARGUMENTS = [
     DeclareLaunchArgument('use_gazebo_gui', default_value='true',
                           choices=['true', 'false'],
                           description='false para correr Gazebo headless.'),
-    DeclareLaunchArgument('lidar_z', default_value='0.194',
-                          description='Altura del LiDAR sobre base_link. En el '
-                                      'RRBOT real es 0.12 sobre un base_link que '
-                                      'esta a 6.42 cm del suelo; aqui base_link '
-                                      'va a ras de suelo, asi que 0.194 da la '
-                                      'misma altura fisica.'),
+    DeclareLaunchArgument('lidar_z', default_value='0.1775',
+                          description='Altura del CENTRO del LiDAR sobre '
+                                      'base_link. 0.1775 = tapa del robot '
+                                      '(0.092) + caja soporte (0.065) + medio '
+                                      'sensor (0.0205).'),
     DeclareLaunchArgument('visualize_lidar', default_value='false',
                           choices=['true', 'false'],
                           description='Dibujar el haz del LiDAR en Gazebo. '

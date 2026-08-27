@@ -28,7 +28,9 @@
   <xacro:property name="mesh_cz" value="0.0207" />
 
   <xacro:property name="chassis_top" value="0.0920" />
-  <xacro:property name="support_side" value="0.0450" />
+  <xacro:property name="support_x" value="0.160" />
+  <xacro:property name="support_y" value="0.110" />
+  <xacro:property name="support_z" value="0.065" />
 
   
   <xacro:property name="_cotas" value="
@@ -57,7 +59,7 @@
                params="parent:='base_link'
                        lidar_x:=-0.050502
                        lidar_y:=-0.017960
-                       lidar_z:=0.194
+                       lidar_z:=0.1775
                        lidar_yaw:=3.14">
 
     <xacro:property name="_nota_mesh" value="
@@ -66,9 +68,19 @@
       (partes transparentes por normales invertidas), asi que se usa este.
     "/>
 
+    <xacro:property name="_nota_giro_visual" value="
+      El visual lleva un yaw de -90 grados (horario) SOLO para orientar el
+      dibujo del sensor. El escaneo no cambia: el sensor de Gazebo cuelga de
+      laser_link, no del visual, asi que las lecturas siguen igual.
+
+      Como en URDF el rpy se aplica antes que el xyz, los offsets de centrado
+      van expresados en el sistema ya rotado: al girar -90 en Z, la x y la y
+      del centro del bbox se intercambian.
+    "/>
+
     <link name="laser_link">
       <visual>
-        <origin xyz="${-mesh_cx} ${-mesh_cy} ${-mesh_cz}" rpy="${pi/2} 0 0"/>
+        <origin xyz="0.0324 0.0278 -0.0207" rpy="${pi/2} 0 ${-pi/2}"/>
         <geometry>
           <mesh filename="package://create3_dock_challenge/meshes/RPLIDAR_C1.STL"
                 scale="0.001 0.001 0.001"/>
@@ -104,20 +116,34 @@
       (0.194 - 0.0205 = 0.1735), o sea 0.0835 m de columna.
     "/>
 
-    <xacro:property name="support_h" value="${lidar_z - lidar_length/2 - chassis_top}" />
+    <xacro:property name="_nota_altura_caja" value="
+      La caja se apoya en la tapa del robot (chassis_top = 9.2 cm) y crece
+      hacia arriba hasta 15.7 cm. El LiDAR va justo encima.
+
+      OJO con laser_link: su origen esta en el CENTRO del sensor, no en la
+      base. Por eso lidar_z no es la altura de la tapa de la caja sino esa
+      altura mas medio sensor:
+        lidar_z = chassis_top + support_z + lidar_length/2
+                = 0.092 + 0.065 + 0.0205 = 0.1775
+      Ese es el default en robot.urdf.xacro. Si se cambia el alto de la caja
+      hay que recalcularlo, o el sensor flota o se hunde en ella.
+
+      A 0.1775 el plano de escaneo sigue cortando las cajas marcadoras del reto
+      (van de 0.13 a 0.25), con 4.7 cm de margen por abajo.
+    "/>
 
     <link name="lidar_support_link">
       <visual>
-        <origin xyz="0 0 ${support_h/2}" rpy="0 0 0"/>
+        <origin xyz="0 0 ${support_z/2}" rpy="0 0 0"/>
         <geometry>
-          <box size="${support_side} ${support_side} ${support_h}"/>
+          <box size="${support_x} ${support_y} ${support_z}"/>
         </geometry>
-        <material name="support_blue">
-          <color rgba="0.12 0.28 0.62 1.0"/>
+        <material name="support_white">
+          <color rgba="0.92 0.92 0.93 1.0"/>
         </material>
       </visual>
       <inertial>
-        <origin xyz="0 0 ${support_h/2}" rpy="0 0 0"/>
+        <origin xyz="0 0 ${support_z/2}" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="1e-6" ixy="0.0" ixz="0.0"
                  iyy="1e-6" iyz="0.0"
@@ -125,8 +151,13 @@
       </inertial>
     </link>
 
+    <xacro:property name="_nota_centrado" value="
+      La caja va centrada en Y respecto al robot (y=0), aunque el LiDAR este
+      descentrado en lidar_y = -0.018. En el montaje real el soporte esta
+      centrado y es el sensor el que queda algo hacia un lado sobre el.
+    "/>
     <joint name="base_support_joint" type="fixed">
-      <origin xyz="${lidar_x} ${lidar_y} ${chassis_top}" rpy="0 0 0"/>
+      <origin xyz="${lidar_x} 0 ${chassis_top}" rpy="0 0 ${lidar_yaw + pi/2}"/>
       <parent link="${parent}"/>
       <child link="lidar_support_link"/>
     </joint>
@@ -137,7 +168,7 @@
   <xacro:macro name="gazebo_lidar" params="visualize:=false noise_stddev:=0.001">
 
     <gazebo reference="lidar_support_link">
-      <material>Gazebo/Blue</material>
+      <material>Gazebo/White</material>
     </gazebo>
 
     <xacro:property name="_nota_material" value="

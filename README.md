@@ -2,8 +2,10 @@
 
 **Lleva un robot de vuelta a su estación de carga usando únicamente el LiDAR.**
 
-Primera etapa del challenge de Kalman Robotics para el HR Fest.
-**Fecha límite de entrega: 20 de septiembre de 2026, 23:59 (hora de Perú).**
+Categoría oficial del **HRFEST 2026**, organizada por Kalman Robotics.
+Bases y registro: **https://hrfest.org/congress/2026/competitions**
+
+**Etapa clasificatoria — cierre: 20 de septiembre de 2026, 23:59 (hora de Perú).**
 
 ---
 
@@ -24,7 +26,8 @@ ros2 topic echo /dock_status
 | **Puedes leer** | `/scan` (LiDAR), `/tf`, `/odom`, `/dock_status` |
 | **Mueves el robot con** | `/cmd_vel` |
 | **Prohibido** | La acción `/dock`, los sensores IR, y la posición que da el simulador |
-| **Entrega** | Repo público + formulario, hasta el **20 de septiembre de 2026** |
+| **Entrega** | Repo público + video sin cortes, hasta el **20 de septiembre de 2026** |
+| **Final** | Top 8 el 30 de septiembre · Gran Final presencial el **6 de noviembre** |
 
 ---
 
@@ -38,12 +41,13 @@ ros2 topic echo /dock_status
 6. [Cómo lanzar la simulación](#6-cómo-lanzar-la-simulación)
 7. [Recursos: qué puedes usar y qué no](#7-recursos-qué-puedes-usar-y-qué-no)
 8. [Criterio de éxito](#8-criterio-de-éxito)
-9. [Reglas del concurso](#9-reglas-del-concurso)
-10. [Evaluación y puntaje](#10-evaluación-y-puntaje)
-11. [Cómo entregar](#11-cómo-entregar)
-12. [Pistas](#12-pistas)
-13. [Problemas frecuentes](#13-problemas-frecuentes)
-14. [Contacto](#14-contacto)
+9. [Cronograma y estructura](#9-cronograma-y-estructura)
+10. [Reglas del concurso](#10-reglas-del-concurso)
+11. [Evaluación y puntaje](#11-evaluación-y-puntaje)
+12. [Cómo entregar](#12-cómo-entregar)
+13. [Pistas](#13-pistas)
+14. [Problemas frecuentes](#14-problemas-frecuentes)
+15. [Contacto](#15-contacto)
 
 ---
 
@@ -126,7 +130,7 @@ cualquier posición de la sala.
 | Hueco libre entre las dos cajas | **9.5 cm** |
 | Separación entre centros de caja | **17.5 cm** |
 | Altura de las cajas sobre el suelo | de **13 cm** a **25 cm** |
-| Altura del plano de escaneo del LiDAR | **19.4 cm** |
+| Altura del plano de escaneo del LiDAR | **17.75 cm** |
 
 > **El eje del dock es el centro del hueco entre las cajas.** Si encuentras el
 > hueco, encontraste el dock.
@@ -161,7 +165,7 @@ del robot real del laboratorio.
 | `angle_increment` | 0.0087388 rad |
 | Alcance | 0.15 m – 12.0 m |
 | Ruido gaussiano | σ = 1 mm (configurable) |
-| Altura del plano de escaneo | **z = 0.194 m** sobre el suelo |
+| Altura del plano de escaneo | **z = 0.1775 m** sobre el suelo |
 
 ⚠️ **El LiDAR está montado girado 180°** (`lidar_yaw = 3.14`), igual que en el
 robot real. Eso significa que **`ranges[0]` NO apunta hacia adelante**, apunta
@@ -169,9 +173,10 @@ hacia atrás. Si asumes "índice 0 = frente" tu código se equivocará por 180°
 Usa **TF** (`base_link` ← `laser_link`) para transformar correctamente, o
 compensa el yaw explícitamente.
 
-⚠️ **La altura importa:** el plano de escaneo está a 0.194 m y las cajas van de
-0.13 a 0.25 m. Por eso el láser las corta a media altura. Si cambias `lidar_z`
-por debajo de 0.13 dejarás de verlas.
+⚠️ **La altura importa:** el plano de escaneo está a 0.1775 m y las cajas van
+de 0.13 a 0.25 m. Por eso el láser las corta a media altura. Esa cota sale del
+montaje real: tapa del robot (9.2 cm) + caja soporte (6.5 cm) + medio sensor
+(2.05 cm). Si cambias `lidar_z` por debajo de 0.13 dejarás de ver las cajas.
 
 ---
 
@@ -393,32 +398,77 @@ ros2 topic echo /dock_status --field is_docked
 
 ---
 
-## 9. Reglas del concurso
+## 9. Cronograma y estructura
 
-1. **Participación individual o en equipos de hasta 3 personas.**
-2. **Lenguaje libre** dentro de ROS 2 Humble: Python (`rclpy`) o C++ (`rclcpp`).
-3. **Librerías libres** (NumPy, SciPy, scikit-learn, OpenCV, etc.), siempre que
-   se declaren en el `package.xml` / `requirements.txt` y la solución instale y
-   corra con `rosdep install` + `colcon build`.
-4. **Prohibido modificar este paquete.** Nada de tocar el mundo, el URDF, los
-   launch ni las cajas. Tu solución va en **tu propio paquete**, aparte.
-5. **Prohibido usar las interfaces de la lista negra** (sección 7). Se revisa el
-   código y se monitorean las suscripciones durante la evaluación.
-6. **Prohibido hardcodear** poses, distancias al dock o secuencias fijas de
-   movimiento.
-7. **Un único comando de lanzamiento.** Tu solución debe arrancar con un solo
-   `ros2 launch <tu_paquete> <tu_launch>.py`, documentado en tu README, sobre una
-   simulación ya corriendo.
-8. **Límite de tiempo por corrida: 180 segundos.** Pasado ese tiempo la corrida
-   cuenta como fallida.
-9. **El código debe ser original.** Puedes inspirarte en literatura y
-   documentación (cítala), pero no copiar una solución existente al reto.
-10. **Fecha límite: 20 de septiembre de 2026, 23:59 (hora de Perú).** No hay
-    prórroga.
+Este reto sigue el formato de todas las categorías del HRFEST 2026:
+**clasificatoria asíncrona → Top 8 → final presencial.**
+
+| Hito | Fecha |
+|---|---|
+| Apertura de inscripciones | 02 de julio de 2026 |
+| **Cierre de envíos** | **20 de septiembre de 2026** (impostergable) |
+| Resultados Top 8 | 30 de septiembre de 2026 |
+| **Gran Final presencial** | **viernes 06 de noviembre de 2026** |
+
+### Etapa 1 — Clasificatoria (lo que describe este README)
+
+Resuelves el docking en simulación desde tu casa y envías tu solución antes del
+20 de septiembre. De aquí salen los **8 equipos finalistas**.
+
+### Etapa 2 — Gran Final presencial
+
+Los 8 clasificados se enfrentan **in situ a un escenario secreto**: mismo robot,
+mismos sensores, mismas reglas, pero con la disposición cambiada (otra pose
+inicial, el dock reubicado y obstáculos añadidos a la sala).
+
+> **Por eso las reglas anti-hardcode no son un formalismo.** En la final tu
+> código se ejecuta sobre un mundo que no has visto. Una solución que percibe
+> se adapta; una que memoriza coordenadas se queda parada.
+
+La asistencia presencial es **obligatoria** para disputar el podio.
 
 ---
 
-## 10. Evaluación y puntaje
+## 10. Reglas del concurso
+
+1. **Equipos de hasta 5 integrantes**, multidisciplinarios: pueden mezclar
+   estudiantes de distintas universidades o instituciones. También se admite
+   participación individual.
+2. **Divisiones por edad** (política general HRFEST):
+   - **Menores de 18 años:** división escolar, enfocada en exhibición,
+     aprendizaje y menciones de honor.
+   - **Mayores de 18 años:** competencia oficial universitaria y profesional
+     por el podio absoluto.
+3. **Lenguaje libre** dentro de ROS 2 Humble: Python (`rclpy`) o C++ (`rclcpp`).
+4. **Librerías libres** (NumPy, SciPy, scikit-learn, OpenCV, etc.), siempre que
+   se declaren en el `package.xml` / `requirements.txt` y la solución instale y
+   corra con `rosdep install` + `colcon build`.
+5. **Prohibido modificar este paquete.** Nada de tocar el mundo, el URDF, los
+   launch ni las cajas. Tu solución va en **tu propio paquete**, aparte.
+6. **Prohibido usar las interfaces de la lista negra** (sección 7). Se revisa el
+   código y se monitorean las suscripciones durante la evaluación.
+7. **Prohibido hardcodear** poses, distancias al dock o secuencias fijas de
+   movimiento.
+8. **Un único comando de lanzamiento.** Tu solución debe arrancar con un solo
+   `ros2 launch <tu_paquete> <tu_launch>.py`, documentado en tu README, sobre una
+   simulación ya corriendo.
+9. **Límite de tiempo por corrida: 180 segundos.** Pasado ese tiempo la corrida
+   cuenta como fallida.
+10. **El código debe ser original.** Puedes inspirarte en literatura y
+   documentación (cítala), pero no copiar una solución existente al reto.
+11. **Fecha límite: 20 de septiembre de 2026, 23:59 (hora de Perú).**
+    Fecha *impostergable* del cronograma oficial HRFEST. No hay prórroga.
+12. **Asistencia presencial obligatoria para el Top 8.** Clasificar otorga el
+    estatus de Finalista Global, pero el podio se disputa únicamente entre los
+    equipos que asistan físicamente a la Gran Final. Quien no asista recibe
+    solo un certificado digital de clasificación.
+
+---
+
+## 11. Evaluación y puntaje
+
+Esta rúbrica corresponde a la **etapa clasificatoria**, de la que salen los 8
+finalistas. En la Gran Final presencial se compite sobre un escenario secreto.
 
 Tu solución se ejecuta en **3 corridas desde poses iniciales que no conoces**,
 sorteadas dentro de estos rangos:
@@ -456,36 +506,62 @@ En orden: (1) mayor número de corridas exitosas, (2) menor tiempo promedio,
 
 ---
 
-## 11. Cómo entregar
+## 12. Cómo entregar
 
-1. **Sube tu solución a un repositorio público de GitHub.**
-   Solo tu paquete: **no incluyas** una copia de `create3_dock_challenge` ni de
-   `create3_sim`, ni las carpetas `build/`, `install/`, `log/`.
+La entrega sigue el flujo oficial de dos fases del HRFEST 2026.
 
-2. **Tu repositorio debe incluir un `README.md` con:**
-   - Nombres y correos del equipo.
-   - Comandos exactos de instalación y build.
-   - **El comando único de lanzamiento** de tu solución.
-   - Explicación del algoritmo: cómo detectas las cajas, cómo calculas el eje
-     del dock, cómo controlas la aproximación y el acoplamiento final.
-   - Limitaciones conocidas.
+### Fase 1 — Inscripción del equipo
 
-3. **Verifica antes de entregar** que tu repo, clonado limpio en un workspace
-   nuevo, compila y corre. Si no arranca en la máquina del jurado, no se evalúa.
+Registra los datos de tu equipo y de su líder en la página oficial. Al terminar
+recibirás por correo un **Código Único de Competidor**, obligatorio para la
+Fase 2.
 
-4. **Envía el enlace por el formulario:**
-   👉 **[FORMULARIO DE ENTREGA — pendiente de publicar]**
+👉 **Inscripción:** https://hrfest.org/congress/2026/competitions
 
-   Se pedirá: nombres del equipo, institución, correo de contacto, URL del repo
-   y el hash del commit que quieres que se evalúe.
+### Fase 2 — Envío de entregables
 
-5. **Fecha límite: 20 de septiembre de 2026, 23:59 (hora de Perú).**
-   Se evalúa el commit indicado en el formulario; los commits posteriores a la
-   fecha límite se ignoran.
+Con tu Código Único, sube estos tres entregables:
+
+**1. Repositorio público de GitHub con tu solución.**
+
+Solo tu paquete: **no incluyas** una copia de `create3_dock_challenge` ni de
+`create3_sim`, ni las carpetas `build/`, `install/`, `log/`.
+
+Tu `README.md` debe llevar:
+- Nombres y correos del equipo.
+- Comandos exactos de instalación y build.
+- **El comando único de lanzamiento** de tu solución.
+- Explicación del algoritmo: cómo detectas las cajas, cómo calculas el eje del
+  dock, cómo controlas la aproximación y el acoplamiento final.
+- Limitaciones conocidas.
+
+Indica también el **hash del commit** que quieres que se evalúe: los commits
+posteriores a la fecha límite se ignoran.
+
+**2. Video demostrativo, en una sola toma y sin cortes de edición.**
+
+Igual que en el resto de categorías del HRFEST:
+- Se ve la simulación corriendo y el robot acoplándose, hasta que
+  `/dock_status` marca `is_docked: true`.
+- Se ve **tu código en pantalla** y explicas verbalmente tu solución.
+- **Sin cortes de edición.** Un video editado invalida la entrega.
+
+**3. Enlace público del video** (YouTube, Drive o similar, accesible sin pedir
+permisos).
+
+### Antes de enviar
+
+Clona tu repo limpio en un workspace nuevo y comprueba que compila y arranca.
+**Si no corre en la máquina del jurado, no se evalúa.**
+
+### Fecha límite
+
+**20 de septiembre de 2026, 23:59 (hora de Perú).** Fecha impostergable del
+cronograma oficial.
 
 ---
 
-## 12. Pistas
+## 13. Pistas
 
 <details>
 <summary><b>Cómo abordarlo (haz clic para desplegar)</b></summary>
@@ -532,7 +608,7 @@ forma:
 
 ---
 
-## 13. Problemas frecuentes
+## 14. Problemas frecuentes
 
 <details>
 <summary><b>"YA HAY UNA SIMULACION CORRIENDO"</b></summary>
@@ -575,7 +651,7 @@ Casi siempre son procesos huérfanos: dos `robot_state_publisher` compitiendo po
 <details>
 <summary><b>No veo las cajas en el /scan</b></summary>
 
-Comprueba que `lidar_z` sea 0.194 (por defecto). Las cajas van de z = 0.13 a
+Comprueba que `lidar_z` sea 0.1775 (por defecto). Las cajas van de z = 0.13 a
 z = 0.25; con el plano de escaneo por debajo de 0.13 el láser pasa por debajo y
 no las ve. Para verificar visualmente:
 
@@ -594,9 +670,10 @@ y entra despacio.
 
 ---
 
-## 14. Contacto
+## 15. Contacto
 
-- **Organiza:** Kalman Robotics
+- **Organiza:** Kalman Robotics — categoría oficial del HRFEST 2026.
+- **Bases oficiales y registro:** https://hrfest.org/congress/2026/competitions
 - **Dudas técnicas:** abre un *issue* en este repositorio.
 - **Correo:** alaurao@uni.pe
 

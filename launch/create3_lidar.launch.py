@@ -41,9 +41,11 @@ ARGUMENTS = [
                                       'Cotas reales del RRBOT (rbot_description).'),
     DeclareLaunchArgument('lidar_y', default_value='-0.017960',
                           description='Pose del LiDAR en y respecto a base_link.'),
-    DeclareLaunchArgument('lidar_z', default_value='0.194',
-                          description='Altura del LiDAR sobre base_link. 0.194 '
-                                      'reproduce la altura fisica del RRBOT.'),
+    DeclareLaunchArgument('lidar_z', default_value='0.1775',
+                          description='Altura del CENTRO del LiDAR sobre '
+                                      'base_link. 0.1775 = tapa del robot '
+                                      '(0.092) + caja soporte (0.065) + medio '
+                                      'sensor (0.0205).'),
     DeclareLaunchArgument('lidar_yaw', default_value='3.14',
                           description='Yaw del LiDAR. 3.14 = montado del reves, '
                                       'como en el robot real.'),
