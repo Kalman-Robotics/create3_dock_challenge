@@ -58,10 +58,10 @@
       <uri>model://sun</uri>
     </include>
 
-    <!-- Suelo propio en gris oscuro en vez del ground_plane de Gazebo, que
-         es gris claro. Con el claro el logo de HR FEST (casi blanco, brillo
-         240/255) apenas se distinguia, y ademas el escenario se veia plano
-         contra las paredes azules. -->
+    <!-- Suelo propio con textura de marmol gris, en vez del ground_plane de
+         Gazebo (gris claro y plano). El gris medio de la textura (brillo 131)
+         da contraste tanto al logo blanco de HR FEST como al oscuro de Kalman.
+         El tamano de las baldosas se ajusta con el scale del material. -->
     <model name="suelo">
       <static>true</static>
       <link name="link">
@@ -86,9 +86,11 @@
             </plane>
           </geometry>
           <material>
-            <ambient>0.22 0.23 0.25 1</ambient>
-            <diffuse>0.30 0.31 0.34 1</diffuse>
-            <specular>0.02 0.02 0.02 1</specular>
+            <script>
+              <uri>model://create3_dock_challenge/materials/scripts</uri>
+              <uri>model://create3_dock_challenge/materials/textures</uri>
+              <name>Kalman/FloorMarble</name>
+            </script>
           </material>
         </visual>
       </link>

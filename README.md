@@ -415,9 +415,13 @@ laboratorio con el robot real, y compites en vivo sobre ese robot.
 |---|---|
 | Apertura de inscripciones | 02 de julio de 2026 |
 | **Cierre de envíos** | **20 de septiembre de 2026** (impostergable) |
-| Acceso al laboratorio de Kalman Robotics | del 21 de septiembre al 4 de noviembre |
+| Acceso al laboratorio de Kalman Robotics | tras la clasificatoria — agenda y permisos por correo |
 | Resultados Top 8 | 30 de septiembre de 2026 |
 | **Gran Final presencial** | **jueves 05 de noviembre de 2026, 14:00–16:00, Auditorio** |
+
+> ⚠️ **Apunta la fecha: esta categoría compite el jueves 05.** Consulta
+> [hrfest.org](https://hrfest.org/congress/2026/competitions) para el resto
+> del programa del congreso.
 
 ### Etapa 1 — Clasificatoria en simulación
 
@@ -436,6 +440,11 @@ No es un premio simbólico: es la diferencia entre llegar a la final con código
 que solo ha visto un simulador y llegar con código ya probado en hardware. El
 salto de simulación a robot real es la parte más dura del reto, y este acceso
 existe para que no la enfrentes por primera vez el día de la final.
+
+**Cómo se agenda:** no tienes que gestionar nada por tu cuenta. La información
+para reservar turno y los permisos de acceso al laboratorio **se enviarán por
+correo a los equipos que superen la primera etapa**, una vez cerrada la
+clasificatoria.
 
 ### Etapa 2 — Gran Final sobre el robot real
 
@@ -593,6 +602,9 @@ docking en simulación antes del 20 de septiembre podrá trabajar con el
 umbrales y validar su detección sobre hardware.
 
 No hace falta entrar al Top 8 para obtenerlo. Basta con resolver el reto.
+
+La información para agendar turno y los permisos de acceso se enviarán por
+correo a los equipos que superen la primera etapa.
 
 ### 🏆 Premios oficiales
 
