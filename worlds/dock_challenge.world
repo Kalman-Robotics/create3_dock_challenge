@@ -196,6 +196,9 @@
          y quedar legibles desde el centro de la sala. Fuera de la
          trayectoria de aproximacion del robot.
 
+         Los dos comparten la misma x (1.55) y estan a y = +-1.05, o sea
+         simetricos respecto al eje del dock.
+
          Solo <visual>, sin <collision>: no estorban al robot ni salen en
          el scan del LiDAR.
 
@@ -204,7 +207,12 @@
 
          Las texturas son PNG RGBA con el fondo transparente del original;
          el material las mezcla con scene_blend alpha_blend, asi que se ve
-         solo el logo, sin rectangulo de fondo. Van en tamanos potencia de
+         solo el logo, sin rectangulo de fondo.
+
+         Cada logo lleva detras un halo difuminado (el propio alfa del logo
+         desenfocado) para despegarlo del marmol: oscuro tras el HR FEST, que
+         es casi blanco y se perdia, y claro tras el de Kalman, que es oscuro.
+         No es un fondo solido, se desvanece hacia los bordes. Van en tamanos potencia de
          2 (1024x256 y 1024x512) porque Ogre reescala los que no lo son y
          se pierde nitidez. La placa lleva el mismo aspecto que su textura:
            Kalman  1024x256 = 4:1  ->  1.40 x 0.35 m
@@ -234,7 +242,7 @@
 
     <model name="hrfest_logo">
       <static>true</static>
-      <pose>1.45 -1.05 0.002 0 0 4.7124</pose>
+      <pose>1.55 -1.05 0.002 0 0 4.7124</pose>
       <link name="link">
         <visual name="visual">
           <geometry>

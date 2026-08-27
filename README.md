@@ -48,16 +48,17 @@ ros2 topic echo /dock_status
 6. [Cómo lanzar la simulación](#6-cómo-lanzar-la-simulación)
 7. [Recursos: qué puedes usar y qué no](#7-recursos-qué-puedes-usar-y-qué-no)
 8. [Criterio de éxito](#8-criterio-de-éxito)
-9. [Cronograma y estructura](#9-cronograma-y-estructura)
+9. [Cronograma](#9-cronograma)
 10. [Reglas del concurso](#10-reglas-del-concurso)
-11. [Evaluación y puntaje](#11-evaluación-y-puntaje)
-12. [Premios y beneficios](#12-premios-y-beneficios)
+11. [Cómo se evalúa la clasificatoria](#11-cómo-se-evalúa-la-clasificatoria)
+12. [Premios](#12-premios)
 13. [Cómo entregar](#13-cómo-entregar)
 14. [Pistas](#14-pistas)
 15. [Problemas frecuentes](#15-problemas-frecuentes)
 16. [Contacto](#16-contacto)
 
----
+> 🤖 La **Gran Final** sobre el robot real y el acceso al laboratorio se
+> describen aparte, en **[docs/GRAN_FINAL.md](docs/GRAN_FINAL.md)**.
 
 ## 1. El robot: iRobot Create 3
 
@@ -107,6 +108,11 @@ entorno + un sensor de rango + control**.
 
 Una sala cerrada de ~6 × 4 m. Al fondo, una pared; contra la pared, dos cajas
 separadas por un hueco; al pie de las cajas, centrado en el hueco, el dock.
+
+![Escenario del reto: el robot en su pose inicial, con el dock y las dos cajas marcadoras al fondo](docs/img/escenario.jpg)
+
+*El robot arranca lejos del dock, descentrado y girado. Las dos cajas naranjas
+son el marcador; el dock está al pie, centrado en el hueco.*
 
 ### Vista superior
 
@@ -160,8 +166,9 @@ que cualquier solución que dependa de estos números va a fallar.
 
 ### El LiDAR
 
-Un **Slamtec RPLIDAR C1** montado sobre un mástil, replicando el montaje físico
-del robot real del laboratorio.
+Un **Slamtec RPLIDAR C1** montado sobre una caja soporte de 16 × 11 × 6.5 cm
+sobre la tapa del robot, replicando el montaje físico del robot real del
+laboratorio.
 
 | Parámetro | Valor |
 |---|---|
@@ -221,10 +228,49 @@ con las esquinas de la sala— es el núcleo del reto.
 
 ### Requisitos
 
-- **Ubuntu 22.04**
-- **ROS 2 Humble**
-- **Gazebo Classic 11** (no Ignition / Gazebo Sim)
-- Paquetes de simulación oficiales del Create 3 (`create3_sim`)
+| | |
+|---|---|
+| Sistema | **Ubuntu 22.04** (nativo, WSL2 o Docker — ver abajo) |
+| ROS | **ROS 2 Humble** |
+| Simulador | **Gazebo Classic 11** (no Ignition / Gazebo Sim) |
+| Extra | Paquetes oficiales del Create 3 (`create3_sim`) |
+
+**Máquina recomendada:** 8 GB de RAM y 15 GB de disco libre. Con 4 GB funciona,
+pero lanza siempre con `use_gazebo_gui:=false` (ver
+[sección 6](#6-cómo-lanzar-la-simulación)): sin la ventana de Gazebo el consumo
+baja mucho y la simulación va más fluida. No necesitas GPU dedicada.
+
+### 🪟 ¿Estás en Windows? No necesitas formatear
+
+**WSL2 funciona perfectamente para este reto** — de hecho, el escenario y las
+imágenes de este README se prepararon sobre WSL2. Windows 11, o Windows 10
+build 19044 o superior:
+
+```powershell
+# En PowerShell como administrador
+wsl --install -d Ubuntu-22.04
+```
+
+Reinicia, abre "Ubuntu 22.04" desde el menú de inicio, crea tu usuario y sigue
+los pasos de abajo con normalidad. La ventana de Gazebo y RViz se abren solas
+gracias a WSLg, sin configurar nada.
+
+<details>
+<summary>Si tu Windows no trae WSLg (Windows 10 antiguo)</summary>
+
+Comprueba tu versión con `winver`. Si es Windows 10 anterior a la build 19044,
+tienes dos salidas:
+
+- **Actualizar Windows** hasta 19044 o superior, y `wsl --update`.
+- **Trabajar headless:** lanza siempre con `use_gazebo_gui:=false` y depura con
+  `ros2 topic echo /scan`. Es perfectamente viable — no necesitas ver Gazebo
+  para resolver el reto, solo para entenderlo más rápido al principio.
+
+</details>
+
+> **Otras opciones:** Docker con una imagen de ROS 2 Humble, o dual boot con
+> Ubuntu 22.04. Ambas funcionan; WSL2 es la de menos fricción si vienes de
+> Windows.
 
 ### Pasos
 
@@ -371,10 +417,11 @@ ros2 run create3_dock_challenge clean_sim.sh
 
 ### Así debe quedar el robot
 
-![Robot acoplado en la estación de carga](docs/img/robot_acoplado.png)
+![Vista cenital del robot acoplado, centrado entre las dos cajas marcadoras](docs/img/acoplado_ok.jpg)
 
-El robot centrado en el hueco entre las dos cajas, perpendicular a la pared y
-con los contactos apoyados en la rampa del dock. En ese momento:
+**Centrado en el hueco entre las dos cajas y perpendicular a la pared**, con los
+contactos apoyados en la rampa del dock. Fíjate en la simetría: esa es
+exactamente la **precisión** que se puntúa. En ese momento:
 
 ```yaml
 is_docked: true
@@ -406,63 +453,29 @@ ros2 topic echo /dock_status --field is_docked
 
 ---
 
-## 9. Cronograma y estructura
-
-Este reto tiene **tres momentos**: resuelves en simulación, te preparas en el
-laboratorio con el robot real, y compites en vivo sobre ese robot.
+## 9. Cronograma
 
 | Hito | Fecha |
 |---|---|
 | Apertura de inscripciones | 02 de julio de 2026 |
-| **Cierre de envíos** | **20 de septiembre de 2026** (impostergable) |
-| Acceso al laboratorio de Kalman Robotics | tras la clasificatoria — agenda y permisos por correo |
+| **Cierre de envíos** | **20 de septiembre de 2026, 23:59 (Perú)** — impostergable |
 | Resultados Top 8 | 30 de septiembre de 2026 |
 | **Gran Final presencial** | **jueves 05 de noviembre de 2026, 14:00–16:00, Auditorio** |
 
-> ⚠️ **Apunta la fecha: esta categoría compite el jueves 05.** Consulta
-> [hrfest.org](https://hrfest.org/congress/2026/competitions) para el resto
-> del programa del congreso.
+El reto tiene dos mitades:
 
-### Etapa 1 — Clasificatoria en simulación
+**🖥️ Clasificatoria — hasta el 20 de septiembre.** Resuelves el docking en
+simulación desde tu casa. **Es todo lo que describe este README.** De aquí
+salen los 8 finalistas.
 
-Resuelves el docking en Gazebo desde tu casa y envías tu solución antes del
-20 de septiembre. De aquí salen los **8 equipos finalistas**.
+**🤖 Gran Final — 5 de noviembre.** Los 8 finalistas despliegan su código en un
+**iRobot Create 3 real** y lo ejecutan en vivo. Y quien complete la
+clasificatoria —aunque no entre al Top 8— obtiene **acceso al laboratorio de
+Kalman Robotics** para prepararse sobre ese robot.
 
-### 🔧 Beneficio — Acceso al laboratorio de Kalman Robotics
-
-> **Todo equipo que logre completar el reto en simulación antes del 20 de
-> septiembre obtiene acceso al laboratorio de Kalman Robotics**, donde podrá
-> **preparar la final sobre el iRobot Create 3 real**: afinar su algoritmo,
-> ajustar umbrales y comprobar cómo se comporta su detección con un LiDAR
-> físico, un dock físico y un suelo real.
-
-No es un premio simbólico: es la diferencia entre llegar a la final con código
-que solo ha visto un simulador y llegar con código ya probado en hardware. El
-salto de simulación a robot real es la parte más dura del reto, y este acceso
-existe para que no la enfrentes por primera vez el día de la final.
-
-**Cómo se agenda:** no tienes que gestionar nada por tu cuenta. La información
-para reservar turno y los permisos de acceso al laboratorio **se enviarán por
-correo a los equipos que superen la primera etapa**, una vez cerrada la
-clasificatoria.
-
-### Etapa 2 — Gran Final sobre el robot real
-
-**Jueves 05 de noviembre, 14:00 a 16:00, en el Auditorio.**
-
-Los 8 finalistas **despliegan su código en el iRobot Create 3 físico y lo
-ejecutan en vivo** delante del jurado y del público. Mismo robot, mismo LiDAR,
-mismas cajas marcadoras — pero el mundo real: ruido de verdad, deslizamiento de
-ruedas, deriva de odometría y una **pose de arranque que no conoces de
-antemano**.
-
-> **Por eso las reglas anti-hardcode no son un formalismo.** En la final tu
-> código corre sobre una escena que no has visto, en un robot que no es el del
-> simulador. Una solución que percibe se adapta; una que memoriza coordenadas
-> se queda parada delante del público.
-
-La asistencia presencial es **obligatoria** para disputar el podio. Quien
-clasifique y no asista recibe únicamente el certificado digital.
+> 👉 **Todo el detalle de la final y del laboratorio está en**
+> **[docs/GRAN_FINAL.md](docs/GRAN_FINAL.md).** No te hace falta hasta que
+> tengas resuelta la simulación.
 
 ---
 
@@ -502,17 +515,15 @@ clasifique y no asista recibe únicamente el certificado digital.
 
 ---
 
-## 11. Evaluación y puntaje
+## 11. Cómo se evalúa la clasificatoria
 
-Se puntúa en dos momentos independientes: la **clasificatoria** decide quiénes
-son los 8 finalistas, y la **final** decide el podio.
+Se puntúan **tres cosas**: que llegues al dock, cuánto tardas y con qué
+precisión quedas acoplado.
 
----
+### Cómo se mide
 
-### Etapa 1 — Clasificatoria (simulación)
-
-Tu solución se ejecuta en **3 corridas desde poses iniciales que no conoces**,
-sorteadas dentro de estos rangos:
+**El jurado ejecuta tu solución.** Tu código se corre en **3 corridas desde
+poses iniciales que no conoces**, sorteadas dentro de estos rangos:
 
 ```
 x   ∈ [0.0,  1.3]   m
@@ -520,22 +531,30 @@ y   ∈ [−0.9, 0.9]   m
 yaw ∈ [−π,   π]     rad     (el robot puede arrancar de espaldas al dock)
 ```
 
-Se usa el `lidar_noise` por defecto (σ = 1 mm) en las 3 corridas.
+Se usan los valores por defecto del launch en las 3 corridas, incluido el ruido
+del LiDAR (σ = 1 mm). Límite de **180 s por corrida**.
 
-#### Rúbrica — 100 puntos
+El video que entregas es **evidencia obligatoria**, no el instrumento de
+puntaje: sirve para verificar que tu solución es tuya y que funciona antes de
+ejecutarla.
 
-| Criterio | Puntos | Detalle |
+### Rúbrica — 100 puntos
+
+| Criterio | Puntos | Cómo se mide |
 |---|---:|---|
-| **Docking logrado** | **50** | Aproximadamente 17 pts por cada corrida con `is_docked: true` dentro de 180 s. |
-| **Tiempo** | **15** | Sobre el promedio de las corridas exitosas. ≤ 45 s → 15 pts; escala lineal hasta 180 s → 0 pts. |
-| **Robustez** | **20** | Sin colisiones, comportamiento estable (no oscila ni se atasca), recupera si pierde de vista las cajas. |
-| **Calidad del código** | **15** | Código estructurado y legible, documentado, con las dependencias declaradas. |
+| **🎯 Llegar al dock** | **50** | ~17 pts por cada corrida que termine con `is_docked: true` dentro de 180 s. Es la condición de todo lo demás: sin acoplar, los otros dos criterios valen 0. |
+| **⏱️ Tiempo** | **25** | Promedio de las corridas exitosas, desde el arranque hasta `is_docked: true`. ≤ 45 s → 25 pts; escala lineal hasta 180 s → 0 pts. |
+| **📐 Precisión** | **25** | Qué tan bien alineado quedas al acoplarte. Se mide con el ground truth del simulador: **error lateral** (distancia de tu centro al eje del dock) y **error angular** (desviación respecto a la perpendicular a la pared). Menos error, más puntos. |
+
+> **Sobre la precisión:** `is_docked: true` admite un margen. Puedes acoplarte
+> torcido y que cuente como éxito — pero puntúa menos que entrar centrado y
+> perpendicular. Alinéate antes de entrar, no durante.
 
 > **Completar el reto** (al menos una corrida con `is_docked: true`, sin faltas
 > descalificatorias) es lo que da **acceso al laboratorio**. El puntaje decide
 > quién entra al Top 8.
 
-#### Penalizaciones
+### Penalizaciones
 
 | Falta | Efecto |
 |---|---|
@@ -546,65 +565,14 @@ Se usa el `lidar_noise` por defecto (σ = 1 mm) en las 3 corridas.
 | No compila / no arranca con el comando documentado | **Descalificación** |
 | Video con cortes de edición | **Descalificación** |
 
-#### Desempate
+### Desempate
 
-En orden: (1) mayor número de corridas exitosas, (2) menor tiempo promedio,
-(3) menor error lateral de acoplamiento, (4) calidad del código.
-
----
-
-### Etapa 2 — Gran Final (robot real)
-
-**Jueves 05 de noviembre, 14:00–16:00, Auditorio.** Dos horas para ocho equipos.
-
-#### Formato
-
-| Momento | Duración |
-|---|---|
-| Briefing y sorteo de orden y de poses de arranque | 15 min |
-| **Turno por equipo** (8 equipos) | 11 min cada uno |
-| Deliberación y resultados | 15 min |
-
-Dentro de tu turno de 11 minutos:
-
-1. **Despliegue (4 min):** clonas y compilas tu repositorio en el equipo de la
-   organización, o traes tu propia laptop ya configurada. El cronómetro corre.
-2. **Intento 1 (máx. 3 min):** el robot arranca desde la pose sorteada.
-3. **Intento 2 (máx. 3 min):** solo si el primero falló. Se puntúa el mejor.
-
-Entre intentos puedes **ajustar parámetros**, pero **no reescribir el
-algoritmo**: el código que despliegas es el que enviaste el 20 de septiembre,
-o el que hayas afinado en el laboratorio de Kalman.
-
-#### Rúbrica — 100 puntos
-
-| Criterio | Puntos | Detalle |
-|---|---:|---|
-| **Docking logrado** | **50** | 50 pts al primer intento · 30 pts al segundo · 0 si no acopla. |
-| **Tiempo** | **20** | Desde la orden de inicio hasta `is_docked: true`. Menor tiempo, más puntos. |
-| **Robustez en hardware** | **15** | Sin choques contra el dock, las cajas o el público. Comportamiento controlado, sin movimientos bruscos ni velocidades peligrosas. |
-| **Sustentación técnica** | **15** | Explicación al jurado de cómo detectas la firma, y qué tuviste que cambiar al pasar de simulación a robot real. |
-
-#### Cómo se decide el podio
-
-El puntaje final es **30% clasificatoria + 70% final**. La simulación te lleva
-al escenario; el robot real decide quién gana.
+En orden: (1) más corridas exitosas, (2) menor tiempo promedio, (3) menor error
+lateral de acoplamiento.
 
 ---
 
-## 12. Premios y beneficios
-
-### 🔧 Beneficio por completar el reto
-
-**Acceso al laboratorio de Kalman Robotics.** Todo equipo que complete el
-docking en simulación antes del 20 de septiembre podrá trabajar con el
-**iRobot Create 3 real** para preparar la final: afinar su algoritmo, ajustar
-umbrales y validar su detección sobre hardware.
-
-No hace falta entrar al Top 8 para obtenerlo. Basta con resolver el reto.
-
-La información para agendar turno y los permisos de acceso se enviarán por
-correo a los equipos que superen la primera etapa.
+## 12. Premios
 
 ### 🏆 Premios oficiales
 
@@ -660,6 +628,13 @@ compatible con ROS 2.
 
 ---
 
+### 🔧 Y además: el laboratorio
+
+**Completar el reto en simulación te da acceso al laboratorio de Kalman
+Robotics** para preparar la final con el iRobot Create 3 real. No hace falta
+entrar al Top 8 — basta con resolverlo.
+Detalles en **[docs/GRAN_FINAL.md](docs/GRAN_FINAL.md)**.
+
 **Importante:** es obligatorio que los 8 finalistas asistan presencialmente a
 la Gran Final para disputar el podio y reclamar los premios físicos. Quien
 clasifique y no asista recibe únicamente el certificado digital.
@@ -702,13 +677,39 @@ Tu `README.md` debe llevar:
 Indica también el **hash del commit** que quieres que se evalúe: los commits
 posteriores a la fecha límite se ignoran.
 
+Tu paquete debe quedar así, y **arrancar con un solo comando**:
+
+```
+mi_solucion_dock/
+├── package.xml
+├── setup.py                    (o CMakeLists.txt si usas C++)
+├── README.md                   ← con lo de arriba
+├── launch/
+│   └── solucion.launch.py      ← el comando único
+└── mi_solucion_dock/
+    └── dock_lidar.py           ← tu nodo
+```
+
+```bash
+# Terminal 1: el escenario del reto (sin tocar)
+ros2 launch create3_dock_challenge challenge_world.launch.py
+
+# Terminal 2: TU comando único, el que documentas en tu README
+ros2 launch mi_solucion_dock solucion.launch.py
+```
+
+Tu nodo debe empezar a trabajar solo al lanzarse, sin que nadie le pulse nada.
+
 **2. Video demostrativo, en una sola toma y sin cortes de edición.**
 
-Igual que en el resto de categorías del HRFEST:
-- Se ve la simulación corriendo y el robot acoplándose, hasta que
-  `/dock_status` marca `is_docked: true`.
-- Se ve **tu código en pantalla** y explicas verbalmente tu solución.
-- **Sin cortes de edición.** Un video editado invalida la entrega.
+| Requisito | |
+|---|---|
+| Duración | **máximo 5 minutos** |
+| Grabación | Una sola toma continua. **Sin cortes de edición** — invalida la entrega |
+| Cámara | Tu cámara encendida en miniatura durante toda la grabación |
+| Contenido | La simulación corriendo y el robot acoplándose hasta `is_docked: true` |
+| Además | Tu **código en pantalla** mientras explicas verbalmente tu solución |
+| Idioma | Español o inglés |
 
 **3. Enlace público del video** (YouTube, Drive o similar, accesible sin pedir
 permisos).
