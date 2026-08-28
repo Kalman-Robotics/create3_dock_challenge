@@ -14,18 +14,19 @@
 >   repositorio**, y por eso el enlace se repite al cierre de varias pestañas.
 >
 > **⚠️ No alargar los textos.** Se midieron las cinco categorías ya publicadas
-> en hrfest.org y estos son los límites reales por pestaña. Pasarse rompe la
-> maqueta de la tarjeta:
+> en hrfest.org, pestaña por pestaña, y estos son los máximos reales. Pasarse
+> rompe la maqueta de la tarjeta:
 >
-> | Pestaña | Rango en el sitio | Nuestro |
+> | Pestaña | Máximo en el sitio | Nuestro |
 > |---|---|---|
-> | El Desafío / Bases | 439 – 1054 | 926 |
-> | Entorno / Especificaciones | 410 – 969 | 573 |
-> | **Evaluación** | **372 – 499** | 470 |
-> | Premiaciones / Acreditaciones | 1054 – 1523 | 1064 |
-> | Registrarse | 565 – 1192 | 684 |
+> | El Desafío / Bases | 1007 | 910 |
+> | Entorno / Especificaciones | 921 | 555 |
+> | **Evaluación** | **451** | 435 |
+> | Premiaciones / Acreditaciones | 670 | 655 |
+> | Registrarse | 796 | 684 |
 >
-> *(Caracteres de texto plano. La media del sitio es 794 y la mediana 848.)*
+> *(Caracteres de texto plano visible. La media del sitio es 560 y la mediana
+> 470, así que estos máximos ya son el extremo alto: no hay margen para crecer.)*
 
 ---
 
@@ -46,27 +47,24 @@
 ## 1 · Pestaña «El Desafío»
 
 Lleva un **iRobot Create 3** de vuelta a su estación de carga usando únicamente
-el LiDAR. El docking por infrarrojos que trae de fábrica —y la acción `/dock`
-que lo resuelve en una línea— están prohibidos.
+el LiDAR. El docking por infrarrojos de fábrica —y la acción `/dock` que lo
+resuelve en una línea— están prohibidos.
 
-**El Reto:** El robot lleva un **LiDAR incorporado**, pero con él no ve el
-dock. Justo encima de la estación hay **dos cajas separadas por un hueco**: ésa
-es su referencia. Hay que escribir un nodo de ROS 2 que las detecte con el
-LiDAR, calcule el centro del hueco —que es el eje del dock— y lleve al robot
-hasta acoplarse.
+**El Reto:** El robot lleva un **LiDAR incorporado**, pero con él no ve el dock.
+Justo encima de la estación hay **dos cajas separadas por un hueco**: ésa es su
+referencia. Hay que escribir un nodo de ROS 2 que las detecte, calcule el centro
+del hueco —que es el eje del dock— y acople el robot.
 
-**Prueba de Clasificación:** Repositorio público de GitHub con la solución, más
-un video demostrativo de máximo 5 minutos.
+**Clasificación:** repositorio público de GitHub con la solución, más un video
+demostrativo de máximo 5 minutos.
 
-**La Final:** El Top 8 despliega su código en un **iRobot Create 3 físico** y lo
+**La Final:** el Top 8 despliega su código en un **iRobot Create 3 físico** y lo
 ejecuta en vivo, desde una pose de arranque que no conoce.
 
-**Beneficio:** todo equipo que complete el reto en simulación —entre o no al
-Top 8— gana **acceso al laboratorio de Kalman Robotics** y un mes gratis de
-nuestra plataforma.
+**Beneficio:** quien complete el reto en simulación gana **acceso al laboratorio
+de Kalman Robotics** y un mes gratis de nuestra plataforma.
 
-📂 Guía técnica completa:
-**https://github.com/Kalman-Robotics/create3_dock_challenge**
+📂 **https://github.com/Kalman-Robotics/create3_dock_challenge**
 
 ---
 
@@ -93,18 +91,17 @@ simulador y codificar posiciones fijas.
 
 ## 3 · Pestaña «Evaluación»
 
-El jurado **ejecuta la solución** en **3 corridas desde poses iniciales
-sorteadas** que el equipo no conoce, con 180 segundos por corrida.
+El jurado **ejecuta la solución** en **3 corridas desde poses sorteadas** que el
+equipo no conoce, con 180 segundos por corrida.
 
-**50 % Acoplamiento:** que el robot quede acoplado. Sin acoplar, el resto
-puntúa cero.
+**50 % Acoplamiento:** que el robot quede acoplado. Sin acoplar, el resto puntúa
+cero.
 
 **25 % Tiempo:** promedio de las corridas exitosas.
 
 **25 % Precisión:** error lateral y angular al acoplarse.
 
-**Penalizan** los choques. **Descalifican** usar una interfaz prohibida o
-codificar posiciones fijas.
+**Descalifican** usar una interfaz prohibida o codificar posiciones fijas.
 
 **El podio se decide en la Gran Final**, sobre el robot real.
 
@@ -112,30 +109,22 @@ codificar posiciones fijas.
 
 ## 4 · Pestaña «Premiaciones»
 
-**1er Lugar:** Trofeo de Campeón, Certificado Físico, **Kit NEXUS completo**
-—robot móvil diferencial con micro-ROS, motores con encoders, IMU y LiDAR
-D500— y **3 meses de suscripción Pro** a la plataforma de Kalman Robotics.
+**1er Lugar:** Trofeo de Campeón, Certificado Físico, **Kit NEXUS completo** y 3
+meses de suscripción Pro a la plataforma de Kalman Robotics.
 
-**2do Lugar:** Medalla, Certificado Físico, **LiDAR Waveshare D500** (DTOF 360°,
-0.03 a 12 m) y **3 meses de suscripción Pro**.
+**2do Lugar:** Medalla, Certificado Físico, **LiDAR Waveshare D500** y 3 meses
+de suscripción Pro.
 
-**3er Lugar:** Medalla, Certificado Físico y **3 meses de suscripción Pro**.
+**3er Lugar:** Medalla, Certificado Físico y 3 meses de suscripción Pro.
 
-**Top 8 Finalistas:** Certificado Virtual de Clasificación y **acceso al
-laboratorio de Kalman Robotics**.
+**Top 8 Finalistas:** Certificado Virtual de Clasificación.
 
-**Todos los que completen el reto:** Certificado de Reto Completado, **acceso al
-laboratorio de Kalman Robotics** y **un mes gratis de la plataforma**, aunque no
-entren al Top 8.
+**Todos los que completen el reto:** acceso al laboratorio de Kalman Robotics y
+un mes gratis de la plataforma, aunque no entren al Top 8.
 
-Las suscripciones a la plataforma son **individuales**: cada integrante del
-equipo recibe la suya, hasta 3 por equipo.
-
-**Importante:** es obligatorio que los 8 finalistas asistan presencialmente a la
-Gran Final para disputar el podio y reclamar los premios físicos. Quien
-clasifique y no asista recibe únicamente el certificado digital.
-
-*El pozo de premios puede ampliarse con aportes de patrocinadores.*
+*Las suscripciones son individuales, una por integrante. Es obligatorio que los
+8 finalistas asistan presencialmente para disputar el podio y reclamar los
+premios físicos.*
 
 ---
 
