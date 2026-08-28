@@ -52,7 +52,8 @@ conoce de antemano.
 
 **Beneficio para todos los que lo logren:** todo equipo que complete el reto en
 simulación —entre o no al Top 8— obtiene **acceso al laboratorio de Kalman
-Robotics** para preparar la final con el robot real.
+Robotics** para preparar la final con el robot real, y **un mes gratis de la
+plataforma de Kalman Robotics** para cada integrante.
 
 📂 Especificación completa, escenario, instalación y pistas:
 **https://github.com/Kalman-Robotics/create3_dock_challenge**
@@ -112,8 +113,8 @@ el comando documentado, o entregar un video con cortes de edición.
 **Desempate:** más corridas exitosas → menor tiempo promedio → menor error
 lateral de acoplamiento.
 
-**El podio se decide 30 % con la clasificatoria y 70 % con la Gran Final** sobre
-el robot real.
+**El podio se decide en la Gran Final, sobre el robot real.** La clasificatoria
+define quiénes son los 8 finalistas; a partir de ahí, todos parten de cero.
 
 ---
 
@@ -131,11 +132,12 @@ D500— y **3 meses de suscripción Pro** a la plataforma de Kalman Robotics.
 **Top 8 Finalistas:** Certificado Virtual de Clasificación y **acceso al
 laboratorio de Kalman Robotics**.
 
-**Todos los que completen el reto:** Certificado de Reto Completado y **acceso
-al laboratorio**, aunque no entren al Top 8.
+**Todos los que completen el reto:** Certificado de Reto Completado, **acceso al
+laboratorio de Kalman Robotics** y **un mes gratis de la plataforma**, aunque no
+entren al Top 8.
 
-Las suscripciones Pro son **individuales**: cada integrante del equipo premiado
-recibe la suya, hasta 5 por equipo.
+Las suscripciones a la plataforma son **individuales**: cada integrante del
+equipo recibe la suya, hasta 3 por equipo.
 
 **Importante:** es obligatorio que los 8 finalistas asistan presencialmente a la
 Gran Final para disputar el podio y reclamar los premios físicos. Quien
@@ -217,17 +219,15 @@ Todos los archivos están en el repositorio, en `docs/img/`.
 
 | Dato | Valor |
 |---|---|
-| Equipos | Máximo 5 integrantes · también individual |
+| Equipos | Máximo 3 integrantes · también individual |
 | Divisiones | Menores de 18 (exhibición) · Mayores de 18 (podio) |
 | Cierre de envíos | 20 de septiembre de 2026, 23:59 (Perú) |
 | Anuncio Top 8 | 30 de septiembre de 2026 |
-| Gran Final | **Jueves 5 de noviembre de 2026, 14:00–16:00, Auditorio** |
+| Gran Final | **Viernes 6 de noviembre de 2026, 14:00–16:00, Auditorio** |
 | Cupo de la final | 8 equipos |
 | Recursos necesarios en la final | 1 iRobot Create 3, 1 dock, 2 cajas marcadoras, mesa y proyector |
 
-> ⚠️ **Verificar con HRFEST:** el cronograma general del congreso marca la Gran
-> Final el **viernes 6**, pero esta categoría compite el **jueves 5**. Confirmar
-> antes de publicar para que no haya dos fechas en circulación.
+> La fecha coincide con la jornada central de competencias del congreso.
 
 ---
 

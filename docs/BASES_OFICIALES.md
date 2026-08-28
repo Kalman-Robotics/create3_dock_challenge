@@ -71,7 +71,7 @@ clasificatoria.
 
 | Aspecto | Norma |
 |---|---|
-| Integrantes | De **1 a 5 personas** |
+| Integrantes | De **1 a 3 personas** |
 | Procedencia | Libre. Se admiten equipos multidisciplinarios y multiinstitucionales |
 | Inscripción | Un único registro por equipo, a través del líder designado |
 | Cambios de plantel | No se admiten después del cierre de inscripciones |
@@ -371,7 +371,7 @@ jurado no será evaluada.**
 | Condición alcanzada | Acreditación |
 |---|---|
 | Inscripción y envío válido | Constancia de participación |
-| **Al menos una corrida con `is_docked: true`** | **Certificado de Reto Completado** + acceso al laboratorio de Kalman Robotics |
+| **Al menos una corrida con `is_docked: true`** | **Certificado de Reto Completado** + acceso al laboratorio de Kalman Robotics + un mes gratis de la plataforma (por integrante) |
 | Clasificación al Top 8 | Certificado virtual de Finalista Global |
 | Asistencia presencial a la Gran Final | Certificado físico de Finalista |
 | Podio (1.º, 2.º, 3.º) | Certificado físico + premios de la sección 7 |

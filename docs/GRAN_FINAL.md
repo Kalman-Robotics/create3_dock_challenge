@@ -38,6 +38,8 @@ el Create 3 real: afinar el algoritmo, ajustar umbrales y comprobar cómo se
 comporta su detección con un LiDAR físico, un dock físico y un suelo real.
 
 **No hace falta entrar al Top 8 para obtenerlo.** Basta con resolver el reto.
+Además, cada integrante recibe **un mes gratis de la plataforma de Kalman
+Robotics**.
 
 No es un beneficio simbólico: es la diferencia entre llegar a la final con
 código que solo ha visto un simulador y llegar con código ya probado en
@@ -88,8 +90,11 @@ el que hayas afinado en el laboratorio de Kalman.
 
 ### Cómo se decide el podio
 
-El puntaje final es **30 % clasificatoria + 70 % final**. La simulación te lleva
-al escenario; el robot real decide quién gana.
+**El podio se decide íntegramente en la final, sobre el robot real.** La
+clasificatoria sirve para llegar hasta aquí: una vez en el Auditorio, los ocho
+equipos parten de cero.
+
+*Solo en caso de empate a puntos* se recurre al puntaje de la clasificatoria.
 
 ---
 

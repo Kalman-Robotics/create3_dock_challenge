@@ -551,7 +551,8 @@ salen los 8 finalistas.
 **🤖 Gran Final — 6 de noviembre.** Los 8 finalistas despliegan su código en un
 **iRobot Create 3 real** y lo ejecutan en vivo. Y quien complete la
 clasificatoria —aunque no entre al Top 8— obtiene **acceso al laboratorio de
-Kalman Robotics** para prepararse sobre ese robot.
+Kalman Robotics** para prepararse sobre ese robot, más **un mes gratis de la
+plataforma**.
 
 > 👉 **Todo el detalle de la final y del laboratorio está en**
 > **[docs/GRAN_FINAL.md](docs/GRAN_FINAL.md).** No te hace falta hasta que
@@ -561,7 +562,7 @@ Kalman Robotics** para prepararse sobre ese robot.
 
 ## 10. Reglas del concurso
 
-1. **Equipos de hasta 5 integrantes**, multidisciplinarios: pueden mezclar
+1. **Equipos de hasta 3 integrantes**, multidisciplinarios: pueden mezclar
    estudiantes de distintas universidades o instituciones. También se admite
    participación individual.
 2. **Divisiones por edad** (política general HRFEST):
@@ -664,7 +665,7 @@ lateral de acoplamiento.
 | **Top 8 finalistas** | Certificado virtual de clasificación · acceso al laboratorio de Kalman Robotics |
 
 > **Las suscripciones Pro son individuales:** cada integrante del equipo
-> premiado recibe la suya, hasta el máximo de 5 integrantes por equipo.
+> premiado recibe la suya, hasta el máximo de 3 integrantes por equipo.
 
 ---
 
@@ -708,11 +709,14 @@ compatible con ROS 2.
 
 ---
 
-### 🔧 Y además: el laboratorio
+### 🔧 Y además, por completar el reto
 
-**Completar el reto en simulación te da acceso al laboratorio de Kalman
-Robotics** para preparar la final con el iRobot Create 3 real. No hace falta
-entrar al Top 8 — basta con resolverlo.
+Aunque no entres al Top 8, resolver el docking en simulación te da:
+
+- **Acceso al laboratorio de Kalman Robotics** para preparar la final con el
+  iRobot Create 3 real.
+- **Un mes gratis de la plataforma de Kalman Robotics**, uno por integrante.
+
 Detalles en **[docs/GRAN_FINAL.md](docs/GRAN_FINAL.md)**.
 
 **Importante:** es obligatorio que los 8 finalistas asistan presencialmente a
