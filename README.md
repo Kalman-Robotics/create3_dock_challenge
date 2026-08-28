@@ -747,7 +747,11 @@ Fase 2.
 
 Con tu Código Único, sube estos tres entregables:
 
-**1. Repositorio público de GitHub con tu solución.**
+**1. Tu código: repositorio público de GitHub o carpeta de Drive.**
+
+Con GitHub indica el **hash del commit** a evaluar. Con Drive, entrega el
+paquete comprimido y **no lo modifiques después del cierre**. En ambos casos el
+enlace debe abrirse sin pedir permisos.
 
 Solo tu paquete: **no incluyas** una copia de `create3_dock_challenge` ni de
 `create3_sim`, ni las carpetas `build/`, `install/`, `log/`.

@@ -329,7 +329,8 @@ Con el Código Único, remitir los tres entregables descritos a continuación.
 
 #### 6.2.1 Repositorio de código
 
-Repositorio público de GitHub que contenga **exclusivamente** el paquete de
+Repositorio público de GitHub —o carpeta pública de Drive— que contenga
+**exclusivamente** el paquete de
 solución del equipo. No debe incluir copias de `create3_dock_challenge`,
 `create3_sim`, ni los directorios `build/`, `install/` o `log/`.
 
