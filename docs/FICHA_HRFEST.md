@@ -12,6 +12,20 @@
 >   de simulación. Mismas 5 pestañas, mismo orden.
 > - **Regla de oro:** la ficha es un resumen. **Todo el detalle vive en el
 >   repositorio**, y por eso el enlace se repite al cierre de varias pestañas.
+>
+> **⚠️ No alargar los textos.** Se midieron las cinco categorías ya publicadas
+> en hrfest.org y estos son los límites reales por pestaña. Pasarse rompe la
+> maqueta de la tarjeta:
+>
+> | Pestaña | Rango en el sitio | Nuestro |
+> |---|---|---|
+> | El Desafío / Bases | 439 – 1054 | 926 |
+> | Entorno / Especificaciones | 410 – 969 | 573 |
+> | **Evaluación** | **372 – 499** | 470 |
+> | Premiaciones / Acreditaciones | 1054 – 1523 | 1064 |
+> | Registrarse | 565 – 1192 | 684 |
+>
+> *(Caracteres de texto plano. La media del sitio es 794 y la mediana 848.)*
 
 ---
 
@@ -33,88 +47,64 @@
 
 Lleva un robot **iRobot Create 3** de vuelta a su estación de carga usando
 únicamente el LiDAR. El sistema de docking por infrarrojos que trae de fábrica
-—y la acción `/dock` que lo resuelve en una sola línea— están prohibidos.
+—y la acción `/dock` que lo resuelve en una línea— están prohibidos.
 
-**El Reto:** El robot no puede ver el dock. Detrás de la estación hay dos cajas
-marcadoras montadas en la pared, separadas por un hueco. Los equipos deben
-escribir un nodo de ROS 2 que reconozca esa firma geométrica en el LiDAR,
-deduzca de ella el eje del dock y acople el robot hasta que `/dock_status`
-reporte `is_docked: true`.
+**El Reto:** El robot no ve el dock. Detrás hay dos cajas marcadoras separadas
+por un hueco. Hay que escribir un nodo de ROS 2 que reconozca esa firma en el
+LiDAR, deduzca de ella el eje del dock y acople el robot.
 
 **Prueba de Clasificación:** Repositorio público de GitHub con la solución, más
-un video de máximo 5 minutos grabado en toma única, con la cámara del
-participante encendida en miniatura, mostrando el código y la simulación
-corriendo hasta el acoplamiento. **Estrictamente sin cortes de edición.**
+un video demostrativo de máximo 5 minutos.
 
 **La Final:** El Top 8 despliega su código en un **iRobot Create 3 físico** y lo
-ejecuta en vivo ante el jurado, desde una pose de arranque sorteada que no
-conoce de antemano.
+ejecuta en vivo, desde una pose de arranque que no conoce.
 
-**Beneficio para todos los que lo logren:** todo equipo que complete el reto en
-simulación —entre o no al Top 8— obtiene **acceso al laboratorio de Kalman
-Robotics** para preparar la final con el robot real, y **un mes gratis de la
-plataforma de Kalman Robotics** para cada integrante.
+**Beneficio:** todo equipo que complete el reto en simulación —entre o no al
+Top 8— gana **acceso al laboratorio de Kalman Robotics** y un mes gratis de
+nuestra plataforma.
 
-📂 Especificación completa, escenario, instalación y pistas:
+📂 Guía técnica completa:
 **https://github.com/Kalman-Robotics/create3_dock_challenge**
 
 ---
 
 ## 2 · Pestaña «Entorno»
 
-**Plataforma:** iRobot Create 3 simulado en **Gazebo Classic 11** sobre **ROS 2
-Humble** (Ubuntu 22.04). Funciona en WSL2 y Docker: no hace falta formatear
-Windows ni tener GPU dedicada.
+**Plataforma:** iRobot Create 3 en **Gazebo Classic 11** sobre **ROS 2 Humble**
+(Ubuntu 22.04, también WSL2 o Docker). Sin GPU dedicada.
 
-**Sensor:** LiDAR **Slamtec RPLIDAR C1** — 360°, 720 muestras, 10 Hz, alcance de
-0.15 a 12 m. Montado invertido sobre el robot, igual que en el equipo físico del
-laboratorio.
+**Sensor:** LiDAR Slamtec RPLIDAR C1 — 360°, 10 Hz, hasta 12 m.
 
-**Marcador:** dos cajas de **8 × 8 × 12 cm** que sobresalen 8 cm de la pared,
-separadas por un hueco libre de **9.5 cm**. El centro de ese hueco es el eje del
-dock.
+**Marcador:** dos cajas de 8 × 8 × 12 cm separadas por un hueco de 9.5 cm. El
+centro del hueco es el eje del dock.
 
-**Lenguaje:** libre dentro de ROS 2 — Python (`rclpy`) o C++ (`rclcpp`), con
-librerías de terceros permitidas.
+**Lenguaje:** libre en ROS 2 — Python o C++.
 
-**Hardware del participante:** ninguno. La etapa clasificatoria es íntegramente
-en simulación; el robot físico lo pone Kalman Robotics.
+**Hardware del participante:** ninguno. El robot físico lo pone Kalman Robotics.
 
-**Restricciones principales:** prohibido usar la acción `/dock`, los sensores
-infrarrojos o el ground truth del simulador; prohibido codificar posiciones o
-trayectorias fijas; prohibido modificar el paquete base.
+**Prohibido:** la acción `/dock`, los sensores infrarrojos, el ground truth del
+simulador y codificar posiciones fijas.
 
-📂 Lista completa de interfaces permitidas y prohibidas en el repositorio.
+📂 Especificación completa en el repositorio.
 
 ---
 
 ## 3 · Pestaña «Evaluación»
 
 El jurado **ejecuta la solución** en **3 corridas desde poses iniciales
-sorteadas** que el equipo no conoce, con los parámetros por defecto del
-escenario y un límite de 180 segundos por corrida.
+sorteadas** que el equipo no conoce, con 180 segundos por corrida.
 
-**50 % Acoplamiento:** puntos por cada corrida que termine con
-`is_docked: true`. Es criterio habilitante: sin acoplar, el resto puntúa cero.
+**50 % Acoplamiento:** que el robot quede acoplado. Sin acoplar, el resto
+puntúa cero.
 
-**25 % Tiempo:** promedio de las corridas exitosas. Puntaje máximo con 45
-segundos o menos, decreciente hasta cero en 180 segundos.
+**25 % Tiempo:** promedio de las corridas exitosas.
 
-**25 % Precisión:** error lateral y angular al acoplarse. Acoplarse torcido
-cuenta como éxito, pero puntúa menos que entrar centrado y perpendicular.
+**25 % Precisión:** error lateral y angular al acoplarse.
 
-**Penalizaciones:** −10 puntos por corrida al golpear las cajas, el dock o las
-paredes.
+**Penalizan** los choques. **Descalifican** usar una interfaz prohibida o
+codificar posiciones fijas.
 
-**Descalifican:** usar una interfaz prohibida, codificar posiciones o
-trayectorias fijas, modificar el paquete base, que la solución no arranque con
-el comando documentado, o entregar un video con cortes de edición.
-
-**Desempate:** más corridas exitosas → menor tiempo promedio → menor error
-lateral de acoplamiento.
-
-**El podio se decide en la Gran Final, sobre el robot real.** La clasificatoria
-define quiénes son los 8 finalistas; a partir de ahí, todos parten de cero.
+**El podio se decide en la Gran Final**, sobre el robot real.
 
 ---
 
