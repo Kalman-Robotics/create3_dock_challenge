@@ -417,7 +417,7 @@ ros2 run create3_dock_challenge clean_sim.sh
 
 ### Así debe quedar el robot
 
-![Vista cenital del robot acoplado, centrado entre las dos cajas marcadoras](docs/img/acoplado_ok.jpg)
+![Vista cenital del robot acoplado con las cotas del marcador](docs/img/acoplado_cotas.jpg)
 
 **Centrado en el hueco entre las dos cajas y perpendicular a la pared**, con los
 contactos apoyados en la rampa del dock. Fíjate en la simetría: esa es
@@ -426,6 +426,29 @@ exactamente la **precisión** que se puntúa. En ese momento:
 ```yaml
 is_docked: true
 ```
+
+### Las cotas del acoplamiento
+
+Este es el mismo momento visto de perfil. Las distancias están **medidas sobre
+un acoplamiento real** en la simulación, no estimadas:
+
+![Corte lateral a escala con las distancias del acoplamiento](docs/img/perfil_acoplado.jpg)
+
+| Distancia | Valor |
+|---|---|
+| Centro del robot → pared de fondo | **26.6 cm** |
+| Centro del robot → cara frontal de las cajas | **18.6 cm** |
+| Centro del robot → origen del dock | **16.6 cm** |
+| Borde frontal del robot → pared de fondo | **9.7 cm** |
+
+El Create 3 mide **33.9 cm de diámetro**, así que su borde frontal queda sobre
+la rampa del dock mientras su centro se detiene a unos 26.6 cm de la pared.
+
+> **Úsalo como comprobación, no como objetivo.** Estas cotas te sirven para
+> verificar que tu aproximación termina donde debe. Pero **no las hardcodees**:
+> tu robot no sabe dónde está la pared, tiene que deducirlo del LiDAR. La
+> referencia de precisión de esa corrida fue de **0.3 cm de error lateral y
+> 0.01° de error angular**.
 
 ### Cómo se comprueba
 

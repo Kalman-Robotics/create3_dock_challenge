@@ -29,9 +29,11 @@ from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 
 
 ARGUMENTS = [
-    DeclareLaunchArgument('use_rviz', default_value='false',
+    DeclareLaunchArgument('use_rviz', default_value='true',
                           choices=['true', 'false'],
-                          description='Abrir RViz.'),
+                          description='Abrir RViz junto con Gazebo, con la '
+                                      'configuracion de rviz/dock_challenge.rviz. '
+                                      'false para lanzar solo la simulacion.'),
     DeclareLaunchArgument('use_gazebo_gui', default_value='true',
                           choices=['true', 'false'],
                           description='false para correr Gazebo headless.'),

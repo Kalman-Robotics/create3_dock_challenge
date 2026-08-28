@@ -26,13 +26,14 @@ from launch.substitutions import (Command, EnvironmentVariable, LaunchConfigurat
                                   PathJoinSubstitution, PythonExpression)
 from launch_ros.actions import Node, PushRosNamespace
 from launch_ros.parameter_descriptions import ParameterValue
-from launch_ros.parameter_descriptions import ParameterValue
 
 
 ARGUMENTS = [
-    DeclareLaunchArgument('use_rviz', default_value='false',
+    DeclareLaunchArgument('use_rviz', default_value='true',
                           choices=['true', 'false'],
-                          description='Abrir RViz.'),
+                          description='Abrir RViz junto con Gazebo, con la '
+                                      'configuracion de rviz/dock_challenge.rviz. '
+                                      'false para lanzar solo la simulacion.'),
     DeclareLaunchArgument('use_gazebo_gui', default_value='true',
                           choices=['true', 'false'],
                           description='false para correr Gazebo headless.'),
@@ -140,8 +141,8 @@ def generate_launch_description():
         [pkg_common_bringup, 'launch', 'dock_description.launch.py'])
     create3_nodes_launch = PathJoinSubstitution(
         [pkg_common_bringup, 'launch', 'create3_nodes.launch.py'])
-    rviz2_launch = PathJoinSubstitution(
-        [pkg_common_bringup, 'launch', 'rviz2.launch.py'])
+    rviz_config = PathJoinSubstitution(
+        [pkg_challenge, 'rviz', 'dock_challenge.rviz'])
 
     namespace = LaunchConfiguration('namespace')
     use_rviz = LaunchConfiguration('use_rviz')
@@ -282,9 +283,18 @@ def generate_launch_description():
             }],
         ),
 
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([rviz2_launch]),
+        # RViz con la configuracion de este paquete (rviz/dock_challenge.rviz),
+        # no con rviz2.launch.py del paquete oficial: aquella carga la config de
+        # iRobot, que no trae el LaserScan ni los frames del LiDAR.
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz2',
+            arguments=['-d', rviz_config],
+            parameters=[{'use_sim_time': True}],
+            output='screen',
             condition=IfCondition(use_rviz),
+            remappings=[('/tf', 'tf'), ('/tf_static', 'tf_static')],
         ),
     ])
 
