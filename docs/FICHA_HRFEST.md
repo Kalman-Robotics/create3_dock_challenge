@@ -73,7 +73,7 @@ nuestra plataforma.
 ## 2 · Pestaña «Entorno»
 
 **Plataforma:** iRobot Create 3 en **Gazebo Classic 11** sobre **ROS 2 Humble**
-(Ubuntu 22.04, también WSL2 o Docker). Sin GPU dedicada.
+(Ubuntu 22.04, también WSL2 o Docker).
 
 **Sensor:** LiDAR Slamtec RPLIDAR C1 — 360°, 10 Hz, hasta 12 m.
 
