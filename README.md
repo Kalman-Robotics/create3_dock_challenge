@@ -66,9 +66,6 @@ ros2 topic echo /dock_status
 > normativo completo: requisitos, especificaciones, evaluación y acreditaciones.
 > Es el documento vinculante.
 >
-> 📄 **[docs/FICHA_HRFEST.md](docs/FICHA_HRFEST.md)** — resumen para la ficha de
-> la plataforma HRFEST (uso interno de la organización).
->
 > 🤖 **[docs/GRAN_FINAL.md](docs/GRAN_FINAL.md)** — la Gran Final sobre el robot
 > real y el acceso al laboratorio.
 
@@ -181,6 +178,11 @@ que cualquier solución que dependa de estos números va a fallar.
 Un **Slamtec RPLIDAR C1** montado sobre una caja soporte de 16 × 11 × 6.5 cm
 sobre la tapa del robot, replicando el montaje físico del robot real del
 laboratorio.
+
+![Montaje real en el laboratorio de Kalman Robotics: el Create 3 con su LiDAR, el dock y las dos cajas marcadoras](docs/img/montaje_real.jpg)
+
+*El escenario de la simulación no es inventado: reproduce este montaje. Al fondo,
+las dos cajas marcadoras sobre la estación de carga.*
 
 | Parámetro | Valor |
 |---|---|

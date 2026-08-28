@@ -14,6 +14,11 @@ La final **no se disputa en Gazebo**. Los 8 finalistas despliegan su código en
 un **iRobot Create 3 físico** y lo ejecutan en vivo delante del jurado y del
 público.
 
+![El robot real con su LiDAR y las cajas marcadoras al fondo](img/rrbot_lidar.jpg)
+
+*El robot sobre el que se compite: mismo Create 3, misma caja soporte, mismo
+RPLIDAR C1 que replica la simulación.*
+
 Mismo robot, mismo LiDAR, mismas cajas marcadoras. Pero el mundo real:
 
 | En simulación | En el robot real |
