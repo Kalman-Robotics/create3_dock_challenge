@@ -450,6 +450,43 @@ la rampa del dock mientras su centro se detiene a unos 26.6 cm de la pared.
 > referencia de precisión de esa corrida fue de **0.3 cm de error lateral y
 > 0.01° de error angular**.
 
+### ¿Cuándo cuenta exactamente como acoplado?
+
+La estación de carga y el robot se "enganchan" por **infrarrojos**. El dock
+lleva un emisor y el robot un receptor, y el simulador da por acoplado el robot
+cuando esos dos puntos se encuentran.
+
+| Punto | Dónde está |
+|---|---|
+| **Emisor del dock** | En el eje del dock, a **4 cm de la pared** |
+| **Receptor del robot** | En la línea central del robot, **15.3 cm por delante de su centro** |
+
+Se marca `is_docked: true` cuando se cumplen **las tres condiciones a la vez**:
+
+| # | Condición | Umbral |
+|---|---|---|
+| 1 | **Distancia** entre receptor y emisor | menos de **7.5 cm** |
+| 2 | **El robot está sobre el eje del dock** (visto desde el dock) | dentro de **±6°** |
+| 3 | **El robot apunta al dock** (visto desde el robot) | dentro de **±6°** |
+
+*(Umbrales tomados del código del simulador: `DOCKED_DISTANCE = 0.075 m`,
+`DOCKED_YAW = π/30`.)*
+
+**Traducido a lo que tú puedes medir:**
+
+- 🎯 **Alineación.** No basta con mirar al dock: tienes que estar **sobre su
+  eje**. A la distancia de acoplamiento, ±6° equivale a **menos de ~8 mm** de
+  desviación lateral respecto al centro del hueco entre las cajas. Por eso hay
+  que **alinearse antes de entrar**, no mientras entras.
+- 📏 **Distancia.** El centro del robot tiene que llegar a **menos de 26.8 cm
+  de la pared**. Más lejos, el receptor no alcanza al emisor y no engancha.
+
+> Fíjate en lo estrecho del margen: la corrida de referencia acabó con los dos
+> puntos a **7.29 cm** — solo 2 mm dentro del umbral de 7.5 cm — y con el centro
+> del robot a **26.6 cm** de la pared, a 2 mm del límite. **Quedarse corto es el
+> fallo más común:** el robot se detiene "casi" acoplado y `is_docked` nunca
+> pasa a `true`.
+
 ### Cómo se comprueba
 
 Una corrida es exitosa cuando:
