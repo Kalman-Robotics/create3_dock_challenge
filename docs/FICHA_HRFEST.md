@@ -1,35 +1,45 @@
-# Ficha para la plataforma HRFEST 2026
+# Carga en la plataforma HRFEST 2026
+## Categoría: Create 3 Dock Challenge
 
-Contenido listo para copiar en el formulario de la categoría en
-[hrfest.org](https://hrfest.org/congress/2026/competitions). Sigue la estructura
-de pestañas que usan las demás competencias.
-
-> Todo el detalle técnico vive en el repositorio. Esta ficha es el resumen
-> público; el enlace al repo es la fuente completa.
+> **Para quien carga la información.**
+> Cada bloque de este documento es **un campo de la plataforma**. Copiar y pegar
+> tal cual, sin reescribir. Los textos ya están ajustados a la extensión que usan
+> las demás categorías del congreso.
+>
+> - **Idioma:** esta versión es la de **español**. La versión en inglés va en
+>   `FICHA_HRFEST_EN.md` (pendiente).
+> - **Molde seguido:** el del *Smart Factory Challenge*, que es la otra categoría
+>   de simulación. Mismas 5 pestañas, mismo orden.
+> - **Regla de oro:** la ficha es un resumen. **Todo el detalle vive en el
+>   repositorio**, y por eso el enlace se repite al cierre de varias pestañas.
 
 ---
 
-## Datos de cabecera
+## 0 · Identidad de la categoría
 
-| Campo | Contenido |
+| Campo | Valor a cargar |
 |---|---|
-| **Nombre** | Create 3 Dock Challenge |
-| **Subtítulo** | Docking Autónomo por LiDAR |
-| **Organiza** | Kalman Robotics |
-| **Repositorio** | https://github.com/Kalman-Robotics/create3_dock_challenge |
+| **Nombre** | `Create 3 Dock Challenge` |
+| **Subtítulo** | `Percepción y Navegación Autónoma` |
+| **Organiza** | `Kalman Robotics` |
+| **Enlace oficial** | `https://github.com/Kalman-Robotics/create3_dock_challenge` |
+| **Imagen de fondo** | `docs/img/escenario.jpg` *(ver sección 7)* |
+| **Icono** | `fa-robot` *(Font Awesome, como el resto de categorías)* |
+| **Correo de contacto** | `alaurao@uni.pe` |
 
 ---
 
-## Pestaña: El Desafío
+## 1 · Pestaña «El Desafío»
 
 Lleva un robot **iRobot Create 3** de vuelta a su estación de carga usando
 únicamente el LiDAR. El sistema de docking por infrarrojos que trae de fábrica
-—y la acción `/dock` que lo resuelve en una línea— están prohibidos.
+—y la acción `/dock` que lo resuelve en una sola línea— están prohibidos.
 
-**El Reto:** Escribir un nodo de ROS 2 que, desde una posición arbitraria de la
-sala, detecte dos cajas marcadoras montadas en la pared detrás del dock, deduzca
-de ellas el eje de la estación y acople el robot hasta que `/dock_status`
-reporte `is_docked: true`. El robot nunca ve el dock: ve el marcador.
+**El Reto:** El robot no puede ver el dock. Detrás de la estación hay dos cajas
+marcadoras montadas en la pared, separadas por un hueco. Los equipos deben
+escribir un nodo de ROS 2 que reconozca esa firma geométrica en el LiDAR,
+deduzca de ella el eje del dock y acople el robot hasta que `/dock_status`
+reporte `is_docked: true`.
 
 **Prueba de Clasificación:** Repositorio público de GitHub con la solución, más
 un video de máximo 5 minutos grabado en toma única, con la cámara del
@@ -37,156 +47,200 @@ participante encendida en miniatura, mostrando el código y la simulación
 corriendo hasta el acoplamiento. **Estrictamente sin cortes de edición.**
 
 **La Final:** El Top 8 despliega su código en un **iRobot Create 3 físico** y lo
-ejecuta en vivo, desde una pose de arranque sorteada que no conocen.
+ejecuta en vivo ante el jurado, desde una pose de arranque sorteada que no
+conoce de antemano.
 
-**Beneficio adicional:** todo equipo que complete el reto en simulación —entre o
-no al Top 8— obtiene acceso al laboratorio de Kalman Robotics para preparar la
-final con el robot real.
+**Beneficio para todos los que lo logren:** todo equipo que complete el reto en
+simulación —entre o no al Top 8— obtiene **acceso al laboratorio de Kalman
+Robotics** para preparar la final con el robot real.
 
----
-
-## Pestaña: Especificaciones
-
-**Plataforma:** iRobot Create 3 simulado en Gazebo Classic 11 sobre ROS 2 Humble
-(Ubuntu 22.04, compatible con WSL2 y Docker). No se requiere GPU dedicada ni
-hardware propio para la clasificatoria.
-
-**Sensor:** Slamtec RPLIDAR C1 — 720 muestras, 360°, 10 Hz, alcance 0.15–12 m,
-ruido gaussiano σ = 1 mm. Montado invertido (`yaw = 180°`), igual que en el
-robot físico: `ranges[0]` no apunta al frente.
-
-**Marcador:** dos cajas de 8 × 8 × 12 cm que sobresalen 8 cm de la pared,
-separadas por un hueco libre de 9.5 cm, a una altura de 13 a 25 cm. El eje del
-dock coincide con el centro del hueco.
-
-**Interfaces permitidas:** `/scan`, `/cmd_vel`, `/tf`, `/odom`, `/imu`,
-`/dock_status`, `/hazard_detection`.
-
-**Interfaces prohibidas:** la acción `/dock`, las acciones de navegación del
-fabricante, los sensores IR (`/ir_opcode`, `/ir_intensity`) y el ground truth
-del simulador (`/sim_ground_truth_*`, `/gazebo/*`).
-
-**Restricciones:** prohibido hardcodear la posición del dock o trayectorias
-fijas; prohibido modificar el paquete base; un único comando de lanzamiento;
-180 segundos por corrida.
-
----
-
-## Pestaña: Evaluación
-
-El jurado ejecuta la solución en **3 corridas** desde poses iniciales sorteadas
-que el equipo no conoce, con los parámetros por defecto del escenario.
-
-**50% Acoplamiento:** ~17 puntos por corrida que termine con `is_docked: true`
-dentro de los 180 s. Criterio habilitante: sin acoplar, el resto puntúa cero.
-
-**25% Tiempo:** promedio de las corridas exitosas. Máximo con ≤ 45 s, escala
-lineal decreciente hasta 0 puntos en 180 s.
-
-**25% Precisión:** error lateral y angular al acoplarse, medidos contra el
-ground truth del simulador. Acoplarse torcido cuenta como éxito, pero puntúa
-menos que entrar centrado y perpendicular.
-
-**Penalizaciones:** −10 puntos por corrida al golpear cajas, dock o paredes.
-**Descalifican:** usar una interfaz prohibida, hardcodear poses o trayectorias,
-modificar el paquete base, que la solución no arranque con el comando
-documentado, o entregar un video con cortes de edición.
-
-**Desempate:** más corridas exitosas → menor tiempo promedio → menor error
-lateral.
-
----
-
-## Pestaña: Premiaciones
-
-**1er Lugar:** Trofeo de Campeón, Certificado Físico, **Kit NEXUS completo**
-(robot móvil diferencial con micro-ROS, encoders, IMU y LiDAR D500) y 3 meses de
-suscripción Pro a la plataforma de Kalman Robotics.
-
-**2do Lugar:** Medalla, Certificado Físico, **LiDAR Waveshare D500** (DTOF 360°,
-0.03–12 m) y 3 meses de suscripción Pro.
-
-**3er Lugar:** Medalla, Certificado Físico y 3 meses de suscripción Pro.
-
-**Top 8 Finalistas:** Certificado Virtual de Clasificación y acceso al
-laboratorio de Kalman Robotics.
-
-Las suscripciones Pro son individuales: cada integrante del equipo premiado
-recibe la suya, hasta 5 por equipo. El pozo de premios puede ampliarse con
-aportes de patrocinadores.
-
----
-
-## Pestaña: Acreditaciones
-
-**Constancia de Participación:** para todo equipo con inscripción y envío
-válido.
-
-**Certificado de Reto Completado:** para todo equipo que logre al menos una
-corrida con `is_docked: true` sin faltas descalificatorias. **Incluye acceso al
-laboratorio de Kalman Robotics** para trabajar con el iRobot Create 3 físico,
-independientemente de la posición en el ranking.
-
-**Certificado Virtual de Finalista Global:** para los 8 equipos clasificados.
-
-**Certificado Físico de Finalista:** para los finalistas que asistan
-presencialmente a la Gran Final.
-
-**Certificado de Podio:** para el 1er, 2do y 3er lugar, junto con los premios
-correspondientes.
-
-La asistencia presencial es obligatoria para disputar el podio. Quien clasifique
-y no asista recibe únicamente el certificado digital.
-
----
-
-## Pestaña: Registrarse
-
-**Fase 1 — Inscripción.** Registra a tu equipo en la plataforma HRFEST y recibe
-por correo tu Código Único de Competidor.
-
-**Fase 2 — Envío.** Con ese código, sube: (1) el enlace a tu repositorio público
-de GitHub indicando el hash del commit a evaluar, (2) el video demostrativo y
-(3) su enlace público.
-
-**Cierre: 20 de septiembre de 2026, 23:59 (hora de Perú).** Fecha impostergable.
-
-📂 **Toda la especificación técnica, el escenario, la instalación y las pistas
-están en el repositorio:**
+📂 Especificación completa, escenario, instalación y pistas:
 **https://github.com/Kalman-Robotics/create3_dock_challenge**
 
 ---
 
-## Texto corto (para tarjeta o listado)
+## 2 · Pestaña «Entorno»
 
-> **Create 3 Dock Challenge** — Docking Autónomo por LiDAR
->
-> Lleva un iRobot Create 3 de vuelta a su estación de carga usando únicamente
-> el LiDAR. Sin infrarrojos, sin la acción `/dock`, sin atajos del simulador:
-> detecta el marcador geométrico, deduce el eje del dock y acopla. Clasificatoria
-> en simulación desde casa; la final, sobre el robot real.
+**Plataforma:** iRobot Create 3 simulado en **Gazebo Classic 11** sobre **ROS 2
+Humble** (Ubuntu 22.04). Funciona en WSL2 y Docker: no hace falta formatear
+Windows ni tener GPU dedicada.
+
+**Sensor:** LiDAR **Slamtec RPLIDAR C1** — 360°, 720 muestras, 10 Hz, alcance de
+0.15 a 12 m. Montado invertido sobre el robot, igual que en el equipo físico del
+laboratorio.
+
+**Marcador:** dos cajas de **8 × 8 × 12 cm** que sobresalen 8 cm de la pared,
+separadas por un hueco libre de **9.5 cm**. El centro de ese hueco es el eje del
+dock.
+
+**Lenguaje:** libre dentro de ROS 2 — Python (`rclpy`) o C++ (`rclcpp`), con
+librerías de terceros permitidas.
+
+**Hardware del participante:** ninguno. La etapa clasificatoria es íntegramente
+en simulación; el robot físico lo pone Kalman Robotics.
+
+**Restricciones principales:** prohibido usar la acción `/dock`, los sensores
+infrarrojos o el ground truth del simulador; prohibido codificar posiciones o
+trayectorias fijas; prohibido modificar el paquete base.
+
+📂 Lista completa de interfaces permitidas y prohibidas en el repositorio.
 
 ---
 
-## Versión en inglés (por si la plataforma la pide)
+## 3 · Pestaña «Evaluación»
 
-**The Challenge.** Bring an **iRobot Create 3** back to its charging dock using
-the LiDAR alone. The factory infrared docking system —and the `/dock` action
-that solves it in one line— are forbidden. Write a ROS 2 node that detects two
-marker boxes on the wall behind the dock, infers the dock axis from them, and
-docks the robot until `/dock_status` reports `is_docked: true`.
+El jurado **ejecuta la solución** en **3 corridas desde poses iniciales
+sorteadas** que el equipo no conoce, con los parámetros por defecto del
+escenario y un límite de 180 segundos por corrida.
 
-**Qualifier.** Public GitHub repository plus a 5-minute single-take video, webcam
-on, showing code and simulation running through a successful dock. **Strictly no
-edit cuts.**
+**50 % Acoplamiento:** puntos por cada corrida que termine con
+`is_docked: true`. Es criterio habilitante: sin acoplar, el resto puntúa cero.
 
-**Finals.** The Top 8 deploy their code on a **physical iRobot Create 3** and run
-it live from an undisclosed starting pose.
+**25 % Tiempo:** promedio de las corridas exitosas. Puntaje máximo con 45
+segundos o menos, decreciente hasta cero en 180 segundos.
 
-**Bonus.** Every team that completes the qualifier —Top 8 or not— gets lab access
-at Kalman Robotics to prepare on the real robot.
+**25 % Precisión:** error lateral y angular al acoplarse. Acoplarse torcido
+cuenta como éxito, pero puntúa menos que entrar centrado y perpendicular.
 
-**Full specification:** https://github.com/Kalman-Robotics/create3_dock_challenge
+**Penalizaciones:** −10 puntos por corrida al golpear las cajas, el dock o las
+paredes.
+
+**Descalifican:** usar una interfaz prohibida, codificar posiciones o
+trayectorias fijas, modificar el paquete base, que la solución no arranque con
+el comando documentado, o entregar un video con cortes de edición.
+
+**Desempate:** más corridas exitosas → menor tiempo promedio → menor error
+lateral de acoplamiento.
+
+**El podio se decide 30 % con la clasificatoria y 70 % con la Gran Final** sobre
+el robot real.
+
+---
+
+## 4 · Pestaña «Premiaciones»
+
+**1er Lugar:** Trofeo de Campeón, Certificado Físico, **Kit NEXUS completo**
+—robot móvil diferencial con micro-ROS, motores con encoders, IMU y LiDAR
+D500— y **3 meses de suscripción Pro** a la plataforma de Kalman Robotics.
+
+**2do Lugar:** Medalla, Certificado Físico, **LiDAR Waveshare D500** (DTOF 360°,
+0.03 a 12 m) y **3 meses de suscripción Pro**.
+
+**3er Lugar:** Medalla, Certificado Físico y **3 meses de suscripción Pro**.
+
+**Top 8 Finalistas:** Certificado Virtual de Clasificación y **acceso al
+laboratorio de Kalman Robotics**.
+
+**Todos los que completen el reto:** Certificado de Reto Completado y **acceso
+al laboratorio**, aunque no entren al Top 8.
+
+Las suscripciones Pro son **individuales**: cada integrante del equipo premiado
+recibe la suya, hasta 5 por equipo.
+
+**Importante:** es obligatorio que los 8 finalistas asistan presencialmente a la
+Gran Final para disputar el podio y reclamar los premios físicos. Quien
+clasifique y no asista recibe únicamente el certificado digital.
+
+*El pozo de premios puede ampliarse con aportes de patrocinadores.*
+
+---
+
+## 5 · Pestaña «Registrarse»
+
+### Fase 1 · Inscripción de Equipo
+
+Registra los datos de tu equipo y de su líder. Al finalizar recibirás un
+**Código Único de Competidor** en tu correo, obligatorio para el siguiente paso.
+
+> **Botón:** `Inscribir Equipo`
+
+### Fase 2 · Envío de Entregables
+
+Ingresa tu Código Único para validar tu equipo. Luego envía **el enlace a tu
+repositorio público de GitHub**, indicando el hash del commit que quieres que se
+evalúe, y **el enlace público de tu video demostrativo** en toma continua sin
+edición.
+
+> **Botón:** `Subir Evidencias`
+
+**Cierre: 20 de septiembre de 2026, 23:59 (hora de Perú).** Fecha impostergable.
+
+📂 Antes de empezar, revisa la guía técnica completa:
+**https://github.com/Kalman-Robotics/create3_dock_challenge**
+
+---
+
+## 6 · Texto corto (tarjeta, listado y redes)
+
+**Versión de una línea:**
+
+> Lleva un robot de vuelta a su estación de carga usando únicamente el LiDAR.
+
+**Versión de tarjeta (≈40 palabras):**
+
+> **Create 3 Dock Challenge** — Percepción y Navegación Autónoma.
+> Sin infrarrojos, sin la acción `/dock`, sin atajos del simulador: detecta el
+> marcador geométrico, deduce el eje de la estación y acopla. Clasificatoria en
+> simulación desde casa; la final, sobre el robot real.
+
+**Versión para redes (≈220 caracteres):**
+
+> 🤖 ¿Puedes hacer que un robot vuelva solo a su cargador usando nada más que un
+> LiDAR? El sistema de fábrica está prohibido. Resuélvelo en simulación y gánate
+> acceso a nuestro laboratorio para competir con el robot real.
+> #HRFEST2026 #ROS2
+
+---
+
+## 7 · Recursos gráficos
+
+La plataforma **no usa logos vectoriales**: cada categoría se ilustra con una
+imagen de fondo y un icono de Font Awesome. Seguimos ese mismo patrón.
+
+| Recurso | Archivo | Equivalente en otras categorías |
+|---|---|---|
+| **Imagen de fondo de la tarjeta** | `docs/img/escenario.jpg` | `smart-factory-bg.webp`, `minihumanoid_sumo.jpg` |
+| **Icono de la categoría** | `fa-robot` | `fa-industry`, `fa-skull-crossbones`, `fa-running` |
+| **Imagen del premio** | `docs/img/nexus_kit.jpg` | `factoryIO.jpg` del Smart Factory |
+| **Trofeo** | *(usar el genérico del congreso)* | `trofeo_minihumanoid.jpg` |
+| **Apoyo técnico** | `docs/img/planta_cotas.jpg` | — |
+
+**Sobre el icono:** `fa-robot` está libre —ninguna otra categoría lo usa— y se
+entiende de inmediato. Alternativa más específica: `fa-charging-station`, que
+apunta justo al problema del reto.
+
+Todos los archivos están en el repositorio, en `docs/img/`.
+
+---
+
+## 8 · Datos operativos (no van en la web, son para la organización)
+
+| Dato | Valor |
+|---|---|
+| Equipos | Máximo 5 integrantes · también individual |
+| Divisiones | Menores de 18 (exhibición) · Mayores de 18 (podio) |
+| Cierre de envíos | 20 de septiembre de 2026, 23:59 (Perú) |
+| Anuncio Top 8 | 30 de septiembre de 2026 |
+| Gran Final | **Jueves 5 de noviembre de 2026, 14:00–16:00, Auditorio** |
+| Cupo de la final | 8 equipos |
+| Recursos necesarios en la final | 1 iRobot Create 3, 1 dock, 2 cajas marcadoras, mesa y proyector |
+
+> ⚠️ **Verificar con HRFEST:** el cronograma general del congreso marca la Gran
+> Final el **viernes 6**, pero esta categoría compite el **jueves 5**. Confirmar
+> antes de publicar para que no haya dos fechas en circulación.
+
+---
+
+## 9 · Lista de verificación antes de publicar
+
+- [ ] Nombre y subtítulo cargados
+- [ ] Las 5 pestañas pegadas en orden
+- [ ] Imagen de fondo subida e icono `fa-robot` asignado
+- [ ] Enlace al repositorio activo en «El Desafío» y en «Registrarse»
+- [ ] Botones de Fase 1 y Fase 2 enlazados a los formularios
+- [ ] Fecha de la Gran Final confirmada con HRFEST
+- [ ] Versión en inglés cargada
+- [ ] Correo de contacto visible
 
 ---
 
