@@ -1,4 +1,4 @@
-# Bases Oficiales — Create 3 Dock Challenge
+# Bases Oficiales — Kalman Dock Challenge
 
 **Categoría oficial del HRFEST 2026 · Organiza: Kalman Robotics**
 
@@ -295,7 +295,7 @@ el ruido del LiDAR (σ = 1 mm).
 | Codificación rígida de poses o trayectorias | **Descalificación** |
 | Modificación del paquete base | **Descalificación** |
 | Solución que no compila o no arranca con el comando documentado | **Descalificación** |
-| Video con cortes de edición | **Descalificación** |
+| Video sin una corrida completa en toma continua | Se solicita reenvío |
 
 ### 5.5 Criterios de desempate
 
@@ -351,7 +351,7 @@ fecha límite no se consideran.
 | Requisito | Especificación |
 |---|---|
 | Duración máxima | 5 minutos |
-| Formato de grabación | Toma única continua, **sin cortes de edición** |
+| Formato de grabación | La **corrida de docking** debe ir en toma continua. Fuera de ella se admite edición |
 | Cámara del participante | Encendida en miniatura durante toda la grabación |
 | Contenido mínimo | Simulación en ejecución y acoplamiento hasta `is_docked: true` |
 | Contenido adicional | Código en pantalla con explicación verbal de la solución |
@@ -483,4 +483,4 @@ comité organizador, cuya decisión es inapelable.
 
 ---
 
-*Documento normativo · Create 3 Dock Challenge · HRFEST 2026 · Kalman Robotics*
+*Documento normativo · Kalman Dock Challenge · HRFEST 2026 · Kalman Robotics*

@@ -1,6 +1,8 @@
-# Create 3 Dock Challenge — Kalman Robotics @ HR Fest
+# Kalman Dock Challenge
 
-**Lleva un robot de vuelta a su estación de carga usando únicamente el LiDAR.**
+**Reto de docking autónomo por LiDAR sobre el iRobot Create 3.**
+
+Lleva un robot de vuelta a su estación de carga usando únicamente el LiDAR.
 
 Categoría oficial del **HRFEST 2026**, organizada por Kalman Robotics.
 Bases y registro: **https://hrfest.org/congress/2026/competitions**
@@ -36,7 +38,7 @@ ros2 topic echo /dock_status
 | **Puedes leer** | `/scan` (LiDAR), `/tf`, `/odom`, `/dock_status` |
 | **Mueves el robot con** | `/cmd_vel` |
 | **Prohibido** | La acción `/dock`, los sensores IR, y la posición que da el simulador |
-| **Entrega** | Repo público + video sin cortes, hasta el **20 de septiembre de 2026** |
+| **Entrega** | Código (GitHub o Drive) + video, hasta el **20 de septiembre de 2026** |
 | **Si lo logras** | Acceso al **laboratorio de Kalman Robotics** para preparar la final con el robot real |
 | **Final** | Top 8 el 30 de septiembre · **viernes 6 de noviembre, 14:00–16:00**, sobre el robot físico |
 | **Premios** | Kit NEXUS, LiDAR Waveshare D500, trofeo y suscripciones Pro — [ver detalle](#12-premios-y-beneficios) |
@@ -646,7 +648,7 @@ ejecutarla.
 | Hardcodear la pose del dock o la trayectoria | **Descalificación** |
 | Modificar `create3_dock_challenge` | **Descalificación** |
 | No compila / no arranca con el comando documentado | **Descalificación** |
-| Video con cortes de edición | **Descalificación** |
+| Video sin una corrida completa en toma continua | Se solicita reenvío |
 
 ### Desempate
 
@@ -790,16 +792,18 @@ ros2 launch mi_solucion_dock solucion.launch.py
 
 Tu nodo debe empezar a trabajar solo al lanzarse, sin que nadie le pulse nada.
 
-**2. Video demostrativo, en una sola toma y sin cortes de edición.**
+**2. Video demostrativo.**
 
 | Requisito | |
 |---|---|
 | Duración | **máximo 5 minutos** |
-| Grabación | Una sola toma continua. **Sin cortes de edición** — invalida la entrega |
-| Cámara | Tu cámara encendida en miniatura durante toda la grabación |
-| Contenido | La simulación corriendo y el robot acoplándose hasta `is_docked: true` |
-| Además | Tu **código en pantalla** mientras explicas verbalmente tu solución |
+| Grabación | La **corrida de docking en toma continua**, del arranque hasta `is_docked: true` |
+| Contenido | La simulación corriendo y, si quieres, tu código en pantalla |
 | Idioma | Español o inglés |
+
+Alrededor de la corrida puedes añadir presentación, títulos o cierre. Lo único
+que no se edita es la corrida en sí: es lo que demuestra que el robot acopla
+de verdad, de un tirón.
 
 **3. Enlace público del video** (YouTube, Drive o similar, accesible sin pedir
 permisos).

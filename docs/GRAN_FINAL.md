@@ -1,4 +1,4 @@
-# Gran Final — Create 3 Dock Challenge
+# Gran Final — Kalman Dock Challenge
 
 **Viernes 06 de noviembre de 2026 · 14:00 – 16:00 · Auditorio**
 
