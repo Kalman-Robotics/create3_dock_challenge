@@ -45,13 +45,15 @@
 
 ## 1 · Pestaña «El Desafío»
 
-Lleva un robot **iRobot Create 3** de vuelta a su estación de carga usando
-únicamente el LiDAR. El sistema de docking por infrarrojos que trae de fábrica
-—y la acción `/dock` que lo resuelve en una línea— están prohibidos.
+Lleva un **iRobot Create 3** de vuelta a su estación de carga usando únicamente
+el LiDAR. El docking por infrarrojos que trae de fábrica —y la acción `/dock`
+que lo resuelve en una línea— están prohibidos.
 
-**El Reto:** El robot no ve el dock. Detrás hay dos cajas marcadoras separadas
-por un hueco. Hay que escribir un nodo de ROS 2 que reconozca esa firma en el
-LiDAR, deduzca de ella el eje del dock y acople el robot.
+**El Reto:** El robot lleva un **LiDAR incorporado**, pero con él no ve el
+dock. Justo encima de la estación hay **dos cajas separadas por un hueco**: ésa
+es su referencia. Hay que escribir un nodo de ROS 2 que las detecte con el
+LiDAR, calcule el centro del hueco —que es el eje del dock— y lleve al robot
+hasta acoplarse.
 
 **Prueba de Clasificación:** Repositorio público de GitHub con la solución, más
 un video demostrativo de máximo 5 minutos.
