@@ -1,6 +1,6 @@
 # Gran Final — Create 3 Dock Challenge
 
-**Jueves 05 de noviembre de 2026 · 14:00 – 16:00 · Auditorio**
+**Viernes 06 de noviembre de 2026 · 14:00 – 16:00 · Auditorio**
 
 Este documento describe la segunda mitad del reto: qué pasa después de la
 clasificatoria. Si todavía estás resolviendo la simulación, lo que necesitas

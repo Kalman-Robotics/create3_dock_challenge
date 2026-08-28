@@ -7,6 +7,11 @@ Bases y registro: **https://hrfest.org/congress/2026/competitions**
 
 **Etapa clasificatoria — cierre: 20 de septiembre de 2026, 23:59 (hora de Perú).**
 
+![Un robot resolviendo el reto: detecta las cajas marcadoras con el LiDAR, se alinea y se acopla al dock](docs/video/demostracion.gif)
+
+*Una solución de referencia resolviendo el reto (×2). El robot no ve el dock:
+detecta las dos cajas de la pared y de ellas deduce dónde acoplarse.*
+
 > **Resuélvelo en simulación y entras al laboratorio.** Todo equipo que complete
 > el reto antes del cierre podrá preparar la Gran Final trabajando con el
 > **iRobot Create 3 real** en el laboratorio de Kalman Robotics. La final se
@@ -33,7 +38,7 @@ ros2 topic echo /dock_status
 | **Prohibido** | La acción `/dock`, los sensores IR, y la posición que da el simulador |
 | **Entrega** | Repo público + video sin cortes, hasta el **20 de septiembre de 2026** |
 | **Si lo logras** | Acceso al **laboratorio de Kalman Robotics** para preparar la final con el robot real |
-| **Final** | Top 8 el 30 de septiembre · **jueves 5 de noviembre, 14:00–16:00**, sobre el robot físico |
+| **Final** | Top 8 el 30 de septiembre · **viernes 6 de noviembre, 14:00–16:00**, sobre el robot físico |
 | **Premios** | Kit NEXUS, LiDAR Waveshare D500, trofeo y suscripciones Pro — [ver detalle](#12-premios-y-beneficios) |
 
 ---
@@ -57,8 +62,15 @@ ros2 topic echo /dock_status
 15. [Problemas frecuentes](#15-problemas-frecuentes)
 16. [Contacto](#16-contacto)
 
-> 🤖 La **Gran Final** sobre el robot real y el acceso al laboratorio se
-> describen aparte, en **[docs/GRAN_FINAL.md](docs/GRAN_FINAL.md)**.
+> 📋 **[docs/BASES_OFICIALES.md](docs/BASES_OFICIALES.md)** — reglamento
+> normativo completo: requisitos, especificaciones, evaluación y acreditaciones.
+> Es el documento vinculante.
+>
+> 📄 **[docs/FICHA_HRFEST.md](docs/FICHA_HRFEST.md)** — resumen para la ficha de
+> la plataforma HRFEST (uso interno de la organización).
+>
+> 🤖 **[docs/GRAN_FINAL.md](docs/GRAN_FINAL.md)** — la Gran Final sobre el robot
+> real y el acceso al laboratorio.
 
 ## 1. El robot: iRobot Create 3
 
@@ -181,6 +193,14 @@ laboratorio.
 | Alcance | 0.15 m – 12.0 m |
 | Ruido gaussiano | σ = 1 mm (configurable) |
 | Altura del plano de escaneo | **z = 0.1775 m** sobre el suelo |
+| Posición respecto al centro del robot | **5.05 cm detrás** y **1.80 cm a la derecha** |
+
+⚠️ **El LiDAR no está en el centro del robot.** Va montado 5.05 cm por detrás y
+1.80 cm descentrado hacia la derecha (`base_link` → `laser_link`:
+`x = −0.050502`, `y = −0.017960`, `z = 0.1775`, `yaw = 3.14`). Si tratas las
+lecturas como si salieran del centro del robot, tu estimación del eje del dock
+irá desplazada. **Usa TF** para pasar de `laser_link` a `base_link` y olvídate
+del problema.
 
 ⚠️ **El LiDAR está montado girado 180°** (`lidar_yaw = 3.14`), igual que en el
 robot real. Eso significa que **`ranges[0]` NO apunta hacia adelante**, apunta
@@ -328,14 +348,14 @@ defecto.
 | Argumento | Por defecto | Para qué |
 |---|---|---|
 | `x`, `y`, `yaw` | `0.4113`, `-0.1825`, `0.3601` | **Pose inicial del robot.** Cámbiala para probar tu solución desde otras posiciones — así se te evaluará. |
-| `use_rviz` | `false` | Abrir RViz para depurar. |
+| `use_rviz` | `true` | Abre RViz junto a Gazebo, con LaserScan y TF ya configurados. `false` para lanzar solo la simulación. |
 | `visualize_lidar` | `false` | Dibuja el haz del LiDAR en Gazebo. Muy útil para entender qué ve el sensor. |
 | `use_gazebo_gui` | `true` | `false` para correr sin ventana (más rápido al iterar). |
 
 ```bash
-# Depurando: RViz + haz del LiDAR visible
+# Depurando: haz del LiDAR visible en Gazebo (RViz ya se abre solo)
 ros2 launch create3_dock_challenge challenge_world.launch.py \
-     use_rviz:=true visualize_lidar:=true
+     visualize_lidar:=true
 
 # Probando tu solución desde otra pose inicial
 ros2 launch create3_dock_challenge challenge_world.launch.py \
@@ -417,7 +437,7 @@ ros2 run create3_dock_challenge clean_sim.sh
 
 ### Así debe quedar el robot
 
-![Vista cenital del robot acoplado con las cotas del marcador](docs/img/acoplado_cotas.jpg)
+![Vista de planta del acoplamiento con todas las cotas](docs/img/planta_cotas.jpg)
 
 **Centrado en el hueco entre las dos cajas y perpendicular a la pared**, con los
 contactos apoyados en la rampa del dock. Fíjate en la simetría: esa es
@@ -520,7 +540,7 @@ ros2 topic echo /dock_status --field is_docked
 | Apertura de inscripciones | 02 de julio de 2026 |
 | **Cierre de envíos** | **20 de septiembre de 2026, 23:59 (Perú)** — impostergable |
 | Resultados Top 8 | 30 de septiembre de 2026 |
-| **Gran Final presencial** | **jueves 05 de noviembre de 2026, 14:00–16:00, Auditorio** |
+| **Gran Final presencial** | **viernes 06 de noviembre de 2026, 14:00–16:00, Auditorio** |
 
 El reto tiene dos mitades:
 
@@ -528,7 +548,7 @@ El reto tiene dos mitades:
 simulación desde tu casa. **Es todo lo que describe este README.** De aquí
 salen los 8 finalistas.
 
-**🤖 Gran Final — 5 de noviembre.** Los 8 finalistas despliegan su código en un
+**🤖 Gran Final — 6 de noviembre.** Los 8 finalistas despliegan su código en un
 **iRobot Create 3 real** y lo ejecutan en vivo. Y quien complete la
 clasificatoria —aunque no entre al Top 8— obtiene **acceso al laboratorio de
 Kalman Robotics** para prepararse sobre ese robot.
@@ -898,7 +918,8 @@ y entra despacio.
 ## 16. Contacto
 
 - **Organiza:** Kalman Robotics — categoría oficial del HRFEST 2026.
-- **Bases oficiales y registro:** https://hrfest.org/congress/2026/competitions
+- **Reglamento completo:** [docs/BASES_OFICIALES.md](docs/BASES_OFICIALES.md)
+- **Bases generales y registro:** https://hrfest.org/congress/2026/competitions
 - **Dudas técnicas:** abre un *issue* en este repositorio.
 - **Correo:** alaurao@uni.pe
 
