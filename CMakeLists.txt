@@ -16,6 +16,7 @@ install(DIRECTORY
 install(PROGRAMS
   scripts/clean_sim.sh
   scripts/set_safety_override.py
+  scripts/test_docker.sh
   DESTINATION lib/${PROJECT_NAME}
 )
 

@@ -30,6 +30,13 @@
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
 
+  <!-- Usadas por los launch y por scripts/set_safety_override.py -->
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>rcl_interfaces</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+
   <export>
     <build_type>ament_cmake</build_type>
   </export>
