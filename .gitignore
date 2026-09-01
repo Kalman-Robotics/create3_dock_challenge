@@ -14,7 +14,8 @@ __pycache__/
 *.swp
 .DS_Store
 
-# Video: se aloja en GitHub via adjunto (user-attachments), no en el repo.
-# Commitearlo deja megas permanentes en el historial de git.
-docs/video/
+# Los .mp4 no entran al repo: son varios megas permanentes en el historial y
+# GitHub no los reproduce embebidos en un README. El GIF si entra, porque es
+# lo que se ve al abrir el repositorio.
+docs/video/*.mp4
 *.mp4
